@@ -1,12 +1,8 @@
 package application;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Date;
 
-import db.DB;
+import model.entities.Cargo;
 import model.entities.Status;
 
 public class Program {
@@ -76,4 +72,9 @@ public class Program {
 //}
 		Status obj = new Status(19, "Extraviado");
 		System.out.println(obj);
+		
+		Cargo carg = new Cargo(24, "Gerente",5000,new Date(), null);
+		System.out.println(carg);
+		
+	
 }}

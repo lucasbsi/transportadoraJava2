@@ -2,7 +2,7 @@ package model.entities;
 
 import java.io.Serializable;
 
-public class Cliente implements Serializable {
+public class Cliente extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

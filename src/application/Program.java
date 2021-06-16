@@ -1,7 +1,12 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
+import db.DB;
 import model.entities.Cargo;
 import model.entities.Status;
 
@@ -44,37 +49,38 @@ public class Program {
 	
 	//----- listar
 	
-//	Connection conn = null;
-//	Statement st = null;
-//	ResultSet rs = null;
-//	try {
-//		conn = DB.getConnection();
-//		st = conn.createStatement();
-//		
-//		rs = st.executeQuery("select * from status");
-//		
-//		while (rs.next()) {
-//			
-//			System.out.println(rs.getInt("Id_status")+ ", "+ rs.getString("Descricao"));
-//			
-//		}
-//		
-//	}
-//	catch (SQLException e) {
-//		e.printStackTrace();
-//	}
-//	finally {
-//		DB.closeResultSet(rs);;
-//		DB.closeStatement(st);
-//		DB.closeConnection();
-//	}
-//
-//}
-		Status obj = new Status(19, "Extraviado");
-		System.out.println(obj);
+	Connection conn = null;
+	Statement st = null;
+	ResultSet rs = null;
+	try {
+		conn = DB.getConnection();
+		st = conn.createStatement();
 		
-		Cargo carg = new Cargo(24, "Gerente",5000,new Date(), null);
-		System.out.println(carg);
+		rs = st.executeQuery("select * from status");
+		
+		while (rs.next()) {
+			
+			System.out.println(rs.getInt("Id_status")+ ", "+ rs.getString("Descricao"));
+			
+		}
+		
+	}
+	catch (SQLException e) {
+		e.printStackTrace();
+	}
+	finally {
+		DB.closeResultSet(rs);;
+		DB.closeStatement(st);
+		DB.closeConnection();
+	}
+
+}
+//		//------------------------------------------------------
+//		Status obj = new Status(19, "Extraviado");
+//		System.out.println(obj);
+//		
+//		Cargo carg = new Cargo(24, "Gerente",5000,new Date(), null);
+//		System.out.println(carg);
 		
 	
-}}
+}

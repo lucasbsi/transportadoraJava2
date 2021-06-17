@@ -8,7 +8,9 @@ import java.sql.Statement;
 
 import db.DB;
 import model.dao.UsuarioDao;
+import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
+import model.entities.Cliente;
 //import model.entities.Cargo;
 //import model.entities.Status;
 import model.entities.Usuario;
@@ -85,15 +87,21 @@ public class Program {
 //		Cargo carg = new Cargo(24, "Gerente",5000,new Date(), null);
 //		System.out.println(carg);
 		
-//------------------------------------------------------------------------------
-	Connection conn = DB.getConnection();
-	UsuarioDaoImplementacao imp = new UsuarioDaoImplementacao(conn);
-	Usuario userr = imp.findById(6621);
-	System.out.println(userr);
-	//UsuarioDao usuarioDao = conn;
-	//UsuarioDaoImplementacao(conn); 
-	//System.out.println(conn);
-	//UsuarioDao usuarioDao = DB.getConnection();
+//----------------ok --------------------------------------------------------------
+//	Connection conn = DB.getConnection();
+//	UsuarioDaoImplementacao imp = new UsuarioDaoImplementacao(conn);
+//	Usuario userr = imp.findById(6621);
+//	System.out.println(userr);
+// ----------------------------- teste findby id client ------------------------
+		
+//		Connection conn = DB.getConnection();
+//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//		Cliente cli = clienteimp.findById(1);
+//		System.out.println(cli);
+		
+// -------------------------------testando criação do BD---------------------------------------------
+		
+		//DB.createDataBase();
 }
 	
 	

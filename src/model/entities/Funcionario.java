@@ -21,7 +21,6 @@ public class Funcionario extends Usuario implements Serializable {
 
 	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String endereco, Cargo cargo,
 			Usuario usuario) {
-		super();
 		this.idFuncionario = idFuncionario;
 		this.nome = nome;
 		this.telefone = telefone;

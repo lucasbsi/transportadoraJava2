@@ -11,20 +11,19 @@ public class Cliente extends Usuario implements Serializable {
 	private String telefone;
 	private String email;
 	private String endereco;
-	private Integer matriculaCliente;
+	private Usuario usuario;
 	
 	public Cliente() {
 		
 	}
 
-	public Cliente(Integer idCliente, String nome, String telefone, String email, String endereco,
-			Integer matriculaCliente) {
+	public Cliente(Integer idCliente, String nome, String telefone, String email, String endereco, Usuario usuario) {
 		this.idCliente = idCliente;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
 		this.endereco = endereco;
-		this.matriculaCliente = matriculaCliente;
+		this.usuario = usuario;
 	}
 
 	public Integer getIdCliente() {
@@ -67,18 +66,22 @@ public class Cliente extends Usuario implements Serializable {
 		this.endereco = endereco;
 	}
 
-	public Integer getMatriculaCliente() {
-		return matriculaCliente;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setMatriculaCliente(Integer matriculaCliente) {
-		this.matriculaCliente = matriculaCliente;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		return result;
 	}
@@ -87,7 +90,7 @@ public class Cliente extends Usuario implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -103,8 +106,10 @@ public class Cliente extends Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email
-				+ ", endereco=" + endereco + ", matriculaCliente=" + matriculaCliente + "]";
+				+ ", endereco=" + endereco + ", usuario=" + usuario + "]";
 	}
+	
+	
 	
 	
     

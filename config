@@ -2,3 +2,105 @@ user=root
 password=root01
 dburl=jdbc:mysql://localhost:3306/transportadora_br
 useSSL=false
+
+create schema transportadora_br
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Cargo` (
+  `Id_cargo` INT NOT NULL,
+  `Descricao` VARCHAR(45) NULL,
+  `Salario` FLOAT NULL,
+  PRIMARY KEY (`Id_cargo`))
+
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Usuario` (
+  `Id_usuario` INT NOT NULL ,
+  `Login` VARCHAR(45) NULL,
+  `Senha` VARCHAR(45) NULL,
+  PRIMARY KEY (`Id_usuario`))
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Cliente` (
+  `Id_cliente` INT NOT NULL ,
+  `Nome` VARCHAR(45) NULL,
+  `Telefone` VARCHAR(45) NULL,
+  `Email` VARCHAR(45) NULL,
+  `Usuario_Id_usuario` INT NOT NULL,
+  PRIMARY KEY (`Id_cliente`),
+  INDEX `fk_Cliente_Usuario1_idx` (`Usuario_Id_usuario` ASC) VISIBLE,
+  CONSTRAINT `fk_Cliente_Usuario1`
+    FOREIGN KEY (`Usuario_Id_usuario`)
+    REFERENCES `transportadora_br`.`Usuario` (`Id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Funcionario` (
+  `Id_funcionario` INT NOT NULL ,
+  `Nome` VARCHAR(45) NULL,
+  `Telefone` VARCHAR(45) NULL,
+  `Email` VARCHAR(45) NULL,
+  `Cargo_Id_cargo` INT NOT NULL,
+  `Usuario_Id_usuario` INT NOT NULL,
+  PRIMARY KEY (`Id_funcionario`),
+  INDEX `fk_Funcionario_Cargo1_idx` (`Cargo_Id_cargo` ASC) VISIBLE,
+  INDEX `fk_Funcionario_Usuario1_idx` (`Usuario_Id_usuario` ASC) VISIBLE,
+  CONSTRAINT `fk_Funcionario_Cargo1`
+    FOREIGN KEY (`Cargo_Id_cargo`)
+    REFERENCES `transportadora_br`.`Cargo` (`Id_cargo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Funcionario_Usuario1`
+    FOREIGN KEY (`Usuario_Id_usuario`)
+    REFERENCES `transportadora_br`.`Usuario` (`Id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete` (
+  `Id_frete` INT NOT NULL ,
+  `Descricao` VARCHAR(45) NULL,
+  `Valor` FLOAT NULL,
+  `Nfe` VARCHAR(45) NULL,
+  `Cliente_Id_cliente` INT NOT NULL,
+  `Funcionario_Id_funcionario` INT NOT NULL,
+  `Status_Id_status` INT NOT NULL,
+  PRIMARY KEY (`Id_frete`),
+  INDEX `fk_Frete_Cliente1_idx` (`Cliente_Id_cliente` ASC) VISIBLE,
+  INDEX `fk_Frete_Funcionario1_idx` (`Funcionario_Id_funcionario` ASC) VISIBLE,
+  INDEX `fk_Frete_Status1_idx` (`Status_Id_status` ASC) VISIBLE,
+  CONSTRAINT `fk_Frete_Cliente1`
+    FOREIGN KEY (`Cliente_Id_cliente`)
+    REFERENCES `transportadora_br`.`Cliente` (`Id_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Frete_Funcionario1`
+    FOREIGN KEY (`Funcionario_Id_funcionario`)
+    REFERENCES `transportadora_br`.`Funcionario` (`Id_funcionario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Frete_Status1`
+    FOREIGN KEY (`Status_Id_status`)
+    REFERENCES `transportadora_br`.`Status` (`Id_status`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete_entrega` (
+  `Id_frete_entrega` INT NOT NULL ,
+  `Endereco` VARCHAR(45) NULL,
+  `Numero` VARCHAR(45) NULL,
+  `Frete_Id_frete` INT NOT NULL,
+  PRIMARY KEY (`Id_frete_entrega`),
+  INDEX `fk_Frete_entrega_Frete1_idx` (`Frete_Id_frete` ASC) VISIBLE,
+  CONSTRAINT `fk_Frete_entrega_Frete1`
+    FOREIGN KEY (`Frete_Id_frete`)
+    REFERENCES `transportadora_br`.`Frete` (`Id_frete`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Status` (
+  `Id_status` INT NOT NULL,
+  `Descricao` VARCHAR(45) NULL,
+  PRIMARY KEY (`Id_status`))
+ENGINE = InnoDB

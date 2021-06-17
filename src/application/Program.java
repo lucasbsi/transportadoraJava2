@@ -7,8 +7,11 @@ import java.sql.Statement;
 //import java.util.Date;
 
 import db.DB;
+import model.dao.UsuarioDao;
+import model.dao.impl.UsuarioDaoImplementacao;
 //import model.entities.Cargo;
 //import model.entities.Status;
+import model.entities.Usuario;
 
 public class Program {
 
@@ -49,32 +52,32 @@ public class Program {
 	
 	//----- listar
 	
-	Connection conn = null;
-	Statement st = null;
-	ResultSet rs = null;
-	try {
-		conn = DB.getConnection();
-		st = conn.createStatement();
-		
-		rs = st.executeQuery("select * from status");
-		
-		while (rs.next()) {
-			
-			System.out.println(rs.getInt("Id_status")+ ", "+ rs.getString("Descricao"));
-			
-		}
-		
-	}
-	catch (SQLException e) {
-		e.printStackTrace();
-	}
-	finally {
-		DB.closeResultSet(rs);;
-		DB.closeStatement(st);
-		DB.closeConnection();
-	}
+//	Connection conn = null;
+//	Statement st = null;
+//	ResultSet rs = null;
+//	try {
+//		conn = DB.getConnection();
+//		st = conn.createStatement();
+//		
+//		rs = st.executeQuery("select * from status");
+//		
+//		while (rs.next()) {
+//			
+//			System.out.println(rs.getInt("Id_status")+ ", "+ rs.getString("Descricao"));
+//			
+//		}
+//		
+//	}
+//	catch (SQLException e) {
+//		e.printStackTrace();
+//	}
+//	finally {
+//		DB.closeResultSet(rs);;
+//		DB.closeStatement(st);
+//		DB.closeConnection();
+//	}
 
-}
+
 //		//------------------------------------------------------
 //		Status obj = new Status(19, "Extraviado");
 //		System.out.println(obj);
@@ -82,5 +85,24 @@ public class Program {
 //		Cargo carg = new Cargo(24, "Gerente",5000,new Date(), null);
 //		System.out.println(carg);
 		
+//------------------------------------------------------------------------------
+	Connection conn = DB.getConnection();
+	UsuarioDaoImplementacao imp = new UsuarioDaoImplementacao(conn);
+	Usuario userr = imp.findById(6621);
+	System.out.println(userr);
+	//UsuarioDao usuarioDao = conn;
+	//UsuarioDaoImplementacao(conn); 
+	//System.out.println(conn);
+	//UsuarioDao usuarioDao = DB.getConnection();
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

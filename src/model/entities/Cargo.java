@@ -11,8 +11,8 @@ public class Cargo implements Serializable {
 	private Integer idCargo;
 	private String descricao;
 	private float salario;
-	private Date dataInicio;
-	private Date dataFim;
+	//private Date dataInicio;
+	//private Date dataFim;
 	
 	public Cargo() {
 	}
@@ -21,8 +21,8 @@ public class Cargo implements Serializable {
 		this.idCargo = idCargo;
 		this.descricao = descricao;
 		this.salario = salario;
-		this.dataInicio = dataInicio;
-		this.dataFim = dataFim;
+		//this.dataInicio = dataInicio;
+		//this.dataFim = dataFim;
 	}
 
 	public Integer getIdCargo() {
@@ -49,21 +49,21 @@ public class Cargo implements Serializable {
 		this.salario = salario;
 	}
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
+//	public Date getDataInicio() {
+//		return dataInicio;
+//	}
+//
+//	public void setDataInicio(Date dataInicio) {
+//		this.dataInicio = dataInicio;
+//	}
+//
+//	public Date getDataFim() {
+//		return dataFim;
+//	}
+//
+//	public void setDataFim(Date dataFim) {
+//		this.dataFim = dataFim;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -92,8 +92,10 @@ public class Cargo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cargo [idCargo=" + idCargo + ", descricao=" + descricao + ", salario=" + salario + ", dataInicio="
-				+ dataInicio + ", dataFim=" + dataFim + "]";
+		return "Cargo [idCargo=" + idCargo + ", descricao=" + descricao + ", salario=" + salario + "]";
+		
+	//	", dataInicio="
+	//	+ dataInicio + ", dataFim=" + dataFim + 
 	}
 	
 	

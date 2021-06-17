@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+//import java.util.Date;
 
 import db.DB;
-import model.entities.Cargo;
-import model.entities.Status;
+//import model.entities.Cargo;
+//import model.entities.Status;
 
 public class Program {
 

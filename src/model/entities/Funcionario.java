@@ -13,14 +13,14 @@ public class Funcionario extends Usuario implements Serializable {
 	private String email;
 	private String endereco;
 	private Integer idCargo;
-	private String matriculaFuncionario;
+	private Integer matriculaFuncionario;
 	
 	public Funcionario(){
 				
 	}
 
 	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String endereco,
-			Integer idCargo, String matriculaFuncionario) {
+			Integer idCargo, Integer matriculaFuncionario) {
 		this.idFuncionario = idFuncionario;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -78,11 +78,11 @@ public class Funcionario extends Usuario implements Serializable {
 		this.idCargo = idCargo;
 	}
 
-	public String getMatriculaFuncionario() {
+	public Integer getMatriculaFuncionario() {
 		return matriculaFuncionario;
 	}
 
-	public void setMatriculaFuncionario(String matriculaFuncionario) {
+	public void setMatriculaFuncionario(Integer matriculaFuncionario) {
 		this.matriculaFuncionario = matriculaFuncionario;
 	}
 

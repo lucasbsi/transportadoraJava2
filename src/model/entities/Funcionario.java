@@ -12,22 +12,23 @@ public class Funcionario extends Usuario implements Serializable {
 	private String telefone;
 	private String email;
 	private String endereco;
-	private Integer idCargo;
-	private Integer matriculaFuncionario;
+	private Cargo cargo;
+	private Usuario usuario;
 	
 	public Funcionario(){
 				
 	}
 
-	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String endereco,
-			Integer idCargo, Integer matriculaFuncionario) {
+	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String endereco, Cargo cargo,
+			Usuario usuario) {
+		super();
 		this.idFuncionario = idFuncionario;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
 		this.endereco = endereco;
-		this.idCargo = idCargo;
-		this.matriculaFuncionario = matriculaFuncionario;
+		this.cargo = cargo;
+		this.usuario = usuario;
 	}
 
 	public Integer getIdFuncionario() {
@@ -70,26 +71,30 @@ public class Funcionario extends Usuario implements Serializable {
 		this.endereco = endereco;
 	}
 
-	public Integer getIdCargo() {
-		return idCargo;
+	public Cargo getCargo() {
+		return cargo;
 	}
 
-	public void setIdCargo(Integer idCargo) {
-		this.idCargo = idCargo;
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
 	}
 
-	public Integer getMatriculaFuncionario() {
-		return matriculaFuncionario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setMatriculaFuncionario(Integer matriculaFuncionario) {
-		this.matriculaFuncionario = matriculaFuncionario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((idFuncionario == null) ? 0 : idFuncionario.hashCode());
 		return result;
 	}
@@ -98,7 +103,7 @@ public class Funcionario extends Usuario implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -114,9 +119,14 @@ public class Funcionario extends Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Funcionario [idFuncionario=" + idFuncionario + ", nome=" + nome + ", telefone=" + telefone + ", email="
-				+ email + ", endereco=" + endereco + ", idCargo=" + idCargo + ", matriculaFuncionario="
-				+ matriculaFuncionario + "]";
+				+ email + ", endereco=" + endereco + ", cargo=" + cargo + ", usuario=" + usuario + "]";
 	}
+
+	
+	
+	
+	
+	
 	
 	
 }

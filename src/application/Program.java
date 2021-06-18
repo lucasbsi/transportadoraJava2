@@ -94,10 +94,10 @@ public class Program {
 //	System.out.println(userr);
 // ----------------------------- teste findby id client ------------------------
 		
-//		Connection conn = DB.getConnection();
-//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-//		Cliente cli = clienteimp.findById(1);
-//		System.out.println(cli);
+		Connection conn = DB.getConnection();
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+		Cliente cli = clienteimp.findById(1);
+		System.out.println(cli);
 		
 // -------------------------------testando criação do BD---------------------------------------------
 		

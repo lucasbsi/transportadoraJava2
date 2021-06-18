@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS `transportadora_br`.`Usuario` (
   PRIMARY KEY (`Id_usuario`))
 ENGINE = InnoDB
 
+CREATE TABLE IF NOT EXISTS `transportadora_br`.`Status` (
+  `Id_status` INT NOT NULL,
+  `Descricao` VARCHAR(45) NULL,
+  PRIMARY KEY (`Id_status`))
+ENGINE = InnoDB
+
 CREATE TABLE IF NOT EXISTS `transportadora_br`.`Cliente` (
   `Id_cliente` INT NOT NULL ,
   `Nome` VARCHAR(45) NULL,
@@ -61,6 +67,8 @@ CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete` (
   `Descricao` VARCHAR(45) NULL,
   `Valor` FLOAT NULL,
   `Nfe` VARCHAR(45) NULL,
+  `Endereco` VARCHAR(45) NULL,
+  `Numero` VARCHAR(45) NULL,
   `Cliente_Id_cliente` INT NOT NULL,
   `Funcionario_Id_funcionario` INT NOT NULL,
   `Status_Id_status` INT NOT NULL,
@@ -83,24 +91,4 @@ CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete` (
     REFERENCES `transportadora_br`.`Status` (`Id_status`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete_entrega` (
-  `Id_frete_entrega` INT NOT NULL ,
-  `Endereco` VARCHAR(45) NULL,
-  `Numero` VARCHAR(45) NULL,
-  `Frete_Id_frete` INT NOT NULL,
-  PRIMARY KEY (`Id_frete_entrega`),
-  INDEX `fk_Frete_entrega_Frete1_idx` (`Frete_Id_frete` ASC) VISIBLE,
-  CONSTRAINT `fk_Frete_entrega_Frete1`
-    FOREIGN KEY (`Frete_Id_frete`)
-    REFERENCES `transportadora_br`.`Frete` (`Id_frete`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Status` (
-  `Id_status` INT NOT NULL,
-  `Descricao` VARCHAR(45) NULL,
-  PRIMARY KEY (`Id_status`))
 ENGINE = InnoDB

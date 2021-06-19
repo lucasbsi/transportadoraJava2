@@ -1,19 +1,9 @@
 package application;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-//import java.util.Date;
-
-import db.DB;
-import model.dao.UsuarioDao;
-import model.dao.impl.ClienteDaoImplementacao;
-import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cliente;
-//import model.entities.Cargo;
-//import model.entities.Status;
-import model.entities.Usuario;
+import model.entities.Frete;
+import model.entities.Funcionario;
+import model.entities.Status;
 
 public class Program {
 
@@ -93,15 +83,24 @@ public class Program {
 //	Usuario userr = imp.findById(6621);
 //	System.out.println(userr);
 // ----------------------------- teste findby id client ------------------------
-		
-		Connection conn = DB.getConnection();
-		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-		Cliente cli = clienteimp.findById(1);
-		System.out.println(cli);
+//		
+//		Connection conn = DB.getConnection();
+//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//		Cliente cli = clienteimp.findById(1);
+//		System.out.println(cli);
 		
 // -------------------------------testando criação do BD---------------------------------------------
 		
 		//DB.createDataBase();
+		
+//---------------------------------------- testando instanciação da classe frete ------------------
+//		Status status = new Status(19,"Partiu!!!");
+//		Cliente cliente = new Cliente(015,"Jose","5566-7788","jose_do_pneu@bol.com","Rua: Marechal dos pregos", null);
+//		Funcionario funcionario = new Funcionario(006,"Carlos Fast Silva", "9988-7766", "carlos_capotavan@ig.com", "Rua Sumida", null, null);
+//		Frete frete = new Frete(01,"Cadeira Gamer", (double) 1500, "AGSDH75HF", "Rua: Oculta", 131, cliente, funcionario, status);
+//		System.out.println(frete);
+//-------------------------------------------------------------------------------------------------
+	
 }
 	
 	

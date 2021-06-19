@@ -3,7 +3,9 @@ password=root01
 dburl=jdbc:mysql://localhost:3306/transportadora_br
 useSSL=false
 
-create schema transportadora_br
+create schema transportadora_br;
+
+use transportadora_br;
 
 CREATE TABLE IF NOT EXISTS `transportadora_br`.`Status` (
   `Id_status` INT,

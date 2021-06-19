@@ -1,9 +1,14 @@
 package application;
 
+import java.sql.Connection;
+
+import db.DB;
+import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cliente;
 import model.entities.Frete;
 import model.entities.Funcionario;
 import model.entities.Status;
+import model.entities.Usuario;
 
 public class Program {
 
@@ -99,9 +104,18 @@ public class Program {
 //		Funcionario funcionario = new Funcionario(006,"Carlos Fast Silva", "9988-7766", "carlos_capotavan@ig.com", "Rua Sumida", null, null);
 //		Frete frete = new Frete(01,"Cadeira Gamer", (double) 1500, "AGSDH75HF", "Rua: Oculta", 131, cliente, funcionario, status);
 //		System.out.println(frete);
-//-------------------------------------------------------------------------------------------------
+//------------------------------testando inserção de usuario-------------------------------------------------------------------
 	
-}
+			Connection conn = DB.getConnection();
+			UsuarioDaoImplementacao usuarioImp = new UsuarioDaoImplementacao(conn);
+			Usuario usu = new Usuario(017,"ajesus","moquitolove");
+			usuarioImp.insert(usu);
+			Usuario userr = usuarioImp.findById(017);
+			System.out.println(userr);
+			
+			
+			
+	}
 	
 	
 	

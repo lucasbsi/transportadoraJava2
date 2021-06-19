@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import db.DB;
@@ -23,8 +24,42 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 //------------------------------
 	@Override
 	public void insert(Usuario obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
 		
+			st = conn.prepareStatement(
+					
+					"INSERT INTO `transportadora_br`.`usuario`" 
+					+ "(`Id_usuario`,`Login`,`Senha`) "
+					+ "values "
+					+ "(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, obj.getIdUsuario());
+			st.setString(2, obj.getLogin());
+			st.setString(3, obj.getSenha());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					System.out.println(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Deu erro pra inserir mano kkkk");
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override

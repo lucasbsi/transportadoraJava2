@@ -65,6 +65,31 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 	@Override
 	public void update(Usuario obj) {
 		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"UPDATE `transportadora_br`.`usuario`"
+					+"SET"
+					+"`Senha` = ?"
+					+"WHERE `Id_usuario` = ?;");
+			
+			st.setInt(2, obj.getIdUsuario());
+			//st.setString(2, obj.getLogin());
+			st.setString(1, obj.getSenha());
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -92,6 +117,7 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 				return obj;
 				
 			}
+			System.out.println("Zebrou jão");
 			return null;
 		}
 		catch(SQLException e) {

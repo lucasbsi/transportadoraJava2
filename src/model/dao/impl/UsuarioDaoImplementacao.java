@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -94,8 +95,28 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+	public void deleteById(Integer id) {//rever not working
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"DELETE FROM `transportadora_br`.`usuario`"
+					+"WHERE `Id_usuario` = ?;");
+			
+			st.setInt(1, id);
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected DELETADO foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -131,9 +152,44 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 	}
 
 	@Override
-	public List<Usuario> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Usuario> findAll() {//falta fazer retornar a lista
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM usuario ORDER BY Id_usuario");
+			rs = st.executeQuery();
+			ArrayList<Usuario> usuArray = new ArrayList<Usuario>();
+			int i =0;
+			while(rs.next()) {
+				Usuario usu = new Usuario();
+			usu.setIdUsuario(	rs.getInt("Id_usuario"));
+			usu.setLogin(	rs.getString("Login"));
+			usu.setSenha(	rs.getString("Senha"));
+			usuArray.add(usu);
+				//System.out.println(rs.getInt("Id_usuario")+", "+(rs.getString("Login"))+", "+(rs.getString("Senha")));
+//				if(rs.next()) {
+//					Usuario obj = new Usuario();
+//					obj.setIdUsuario(rs.getInt("Id_usuario"));
+//					obj.setLogin(rs.getString("Login"));
+//					obj.setSenha(rs.getString("Senha"));
+//					return obj;
+					
+				}
+			//System.out.println(usuArray);
+			return usuArray;
+			}
+//			System.out.println("Zebrou jão");
+//			return null;
+		
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+		
 	}
 
 }

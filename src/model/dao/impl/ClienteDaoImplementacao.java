@@ -34,8 +34,28 @@ public class ClienteDaoImplementacao implements ClienteDao {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+	public void deleteById(Integer id) {//rever not working
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"DELETE FROM `transportadora_br`.`cliente`"
+					+"WHERE `Id_cliente` = ?;");
+			
+			st.setInt(1, id);
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected DELETADO cliente foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

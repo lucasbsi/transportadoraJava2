@@ -1,8 +1,10 @@
 package application;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import db.DB;
+import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cliente;
 import model.entities.Frete;
@@ -115,17 +117,51 @@ public class Program {
 //			Usuario userr = usuarioImp.findById(30);
 //			System.out.println(userr);
 //----------------------------testando update de usuario ------------------------
+//		
+//		Connection conn = DB.getConnection();
+//		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
+//		
+//		Usuario user = usuarioimp.findById(13);
+//		user.setSenha("kkkkk");
+//		
+//		usuarioimp.update(user);
+//		
+//		System.out.println(user);
+//----------------------------------- testando find all usuario ---------------
 		
 		Connection conn = DB.getConnection();
 		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
-		Usuario user = usuarioimp.findById(13);
-		user.setSenha("kkkkk");
-		usuarioimp.update(user);
-		System.out.println(user);
-			
-			
-			
-	}
+	System.out.println(	usuarioimp.findAll());
+// ------------------------------- testando delete by id usuario -----ok-------------------
+//		Connection conn = DB.getConnection();
+//		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
+//		usuarioimp.deleteById(804);
+		
+// ------------------------------- testando delete by id cliente -ok-----------------------
+//		Connection conn = DB.getConnection();
+//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//		clienteimp.deleteById(904);
+// ------------------------- relembrando array list of object---ok------------------------------
+//		ArrayList<Usuario> usuarray = new ArrayList<Usuario>();
+//		Usuario usuario1 = new Usuario();
+//		
+//		usuario1.setIdUsuario(70);
+//		usuario1.setLogin("hue");
+//		usuario1.setSenha("brbr");
+//		
+//		Usuario usuario2 = new Usuario();
+//		
+//		usuario2.setIdUsuario(71);
+//		usuario2.setLogin("kkkk");
+//		usuario2.setSenha("nocry");
+//		
+//		usuarray.add(usuario1);
+//		usuarray.add(usuario2);
+//		
+//		//System.out.println(usuarray);
+//		System.out.println(usuarray.get(1));// get theobject in position
+		
+//-------------------------------
 	
 	
 	
@@ -137,3 +173,4 @@ public class Program {
 	
 	
 }
+	}

@@ -3,61 +3,49 @@ password=root01
 dburl=jdbc:mysql://localhost:3306/transportadora_br
 useSSL=false
 
-create schema transportadora_br;
+create schema transportadora_br_v2;
 
-use transportadora_br;
+use transportadora_br_v2;
 
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Status` (
+CREATE TABLE IF NOT EXISTS `transportadora_br_v2`.`Status` (
   `Id_status` INT,
   `Descricao` VARCHAR(45) NULL,
   PRIMARY KEY (`Id_status`))
 ENGINE = InnoDB
 
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Cargo` (
+CREATE TABLE IF NOT EXISTS `transportadora_br_v2`.`Cargo` (
   `Id_cargo` INT,
   `Descricao` VARCHAR(45) NULL,
   `Salario` FLOAT NULL,
   PRIMARY KEY (`Id_cargo`))
 
 
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Usuario` (
-  `Id_usuario` INT ,
-  `Login` VARCHAR(45) NULL,
-  `Senha` VARCHAR(45) NULL,
-  PRIMARY KEY (`Id_usuario`))
-ENGINE = InnoDB
-
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Cliente` (
-  `Id_cliente` INT ,
+CREATE TABLE IF NOT EXISTS `transportadora_br_v2`.`Cliente` (
+  `Id_cliente` INT,
   `Nome` VARCHAR(45) NULL,
   `Telefone` VARCHAR(45) NULL,
   `Email` VARCHAR(45) NULL,
-  `Usuario_Id_usuario` INT,
-  PRIMARY KEY (`Id_cliente`),
-  CONSTRAINT `fk_Cliente_Usuario1`
-    FOREIGN KEY (`Usuario_Id_usuario`)
-    REFERENCES `transportadora_br`.`Usuario` (`Id_usuario`)
-    )
-ENGINE = InnoDB
+  `Login` VARCHAR(45) NULL,
+  `Senha` VARCHAR(45) NULL,
+  PRIMARY KEY (`Id_cliente`))
+ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Funcionario` (
+CREATE TABLE IF NOT EXISTS `transportadora_br_v2`.`Funcionario` (
   `Id_funcionario` INT ,
   `Nome` VARCHAR(45) NULL,
   `Telefone` VARCHAR(45) NULL,
   `Email` VARCHAR(45) NULL,
+  `Login` VARCHAR(45) NULL,
+  `Senha` VARCHAR(45) NULL,
   `Cargo_Id_cargo` INT,
-  `Usuario_Id_usuario` INT,
   PRIMARY KEY (`Id_funcionario`),
   CONSTRAINT `fk_Funcionario_Cargo1`
     FOREIGN KEY (`Cargo_Id_cargo`)
-    REFERENCES `transportadora_br`.`Cargo` (`Id_cargo`),
-  CONSTRAINT `fk_Funcionario_Usuario1`
-    FOREIGN KEY (`Usuario_Id_usuario`)
-    REFERENCES `transportadora_br`.`Usuario` (`Id_usuario`)
-    )
+    REFERENCES `transportadora_br_v2`.`Cargo` (`Id_cargo`))
+  
 ENGINE = InnoDB
 
-CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete` (
+CREATE TABLE IF NOT EXISTS `transportadora_br_v2`.`Frete` (
   `Id_frete` INT ,
   `Descricao` VARCHAR(45) NULL,
   `Valor` FLOAT NULL,
@@ -70,12 +58,12 @@ CREATE TABLE IF NOT EXISTS `transportadora_br`.`Frete` (
   PRIMARY KEY (`Id_frete`),
   CONSTRAINT `fk_Frete_Cliente1`
     FOREIGN KEY (`Cliente_Id_cliente`)
-    REFERENCES `transportadora_br`.`Cliente` (`Id_cliente`),
+    REFERENCES `transportadora_br_v2`.`Cliente` (`Id_cliente`),
   CONSTRAINT `fk_Frete_Funcionario1`
     FOREIGN KEY (`Funcionario_Id_funcionario`)
-    REFERENCES `transportadora_br`.`Funcionario` (`Id_funcionario`),
+    REFERENCES `transportadora_br_v2`.`Funcionario` (`Id_funcionario`),
   CONSTRAINT `fk_Frete_Status1`
     FOREIGN KEY (`Status_Id_status`)
-    REFERENCES `transportadora_br`.`Status` (`Id_status`)
+    REFERENCES `transportadora_br_v2`.`Status` (`Id_status`)
     )
 ENGINE = InnoDB

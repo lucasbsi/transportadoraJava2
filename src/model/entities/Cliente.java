@@ -2,29 +2,33 @@ package model.entities;
 
 import java.io.Serializable;
 
-public class Cliente extends Usuario implements Serializable {
+public class Cliente implements Serializable{
 	
+
 	private static final long serialVersionUID = 1L;
 	
 	private Integer idCliente;
 	private String nome;
 	private String telefone;
 	private String email;
-	private String endereco;
-	private Usuario usuario;
+	private String login;
+	private String senha;
 	
 	public Cliente() {
 		
 	}
 
-	public Cliente(Integer idCliente, String nome, String telefone, String email, String endereco, Usuario usuario) {
+	public Cliente(int idCliente, String nome, String telefone, String email, String login,
+			String senha) {
 		this.idCliente = idCliente;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
-		this.endereco = endereco;
-		this.usuario = usuario;
+		this.login = login;
+		this.senha = senha;
 	}
+
+	
 
 	public Integer getIdCliente() {
 		return idCliente;
@@ -58,30 +62,26 @@ public class Cliente extends Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		return result;
 	}
@@ -90,7 +90,7 @@ public class Cliente extends Usuario implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -106,11 +106,9 @@ public class Cliente extends Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email
-				+ ", endereco=" + endereco + ", usuario=" + usuario + "]";
+				+ ", login=" + login + ", senha=" + senha + "]";
 	}
 	
 	
-	
-	
-    
+
 }

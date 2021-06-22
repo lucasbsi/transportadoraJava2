@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,12 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
+import db.DB;
+import model.dao.impl.UsuarioDaoImplementacao;
+
+import javax.swing.JTable;
+import javax.swing.JButton;
+
 public class MainWindow extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -43,7 +51,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindow() {
-		setTitle("Transportadora FastKombi");
+		setTitle("Transportadora FastE");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/img/iconkombi.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,8 +59,8 @@ public class MainWindow extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnUsuario = new JMenu("Usuario");
-		menuBar.add(mnUsuario);
+		JMenu menuUsuario = new JMenu("Usuario");
+		menuBar.add(menuUsuario);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Cadastrar");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
@@ -61,16 +69,16 @@ public class MainWindow extends JFrame {
 				telaCadNew.setVisible(true);
 			}
 		});
-		mnUsuario.add(mntmNewMenuItem_3);
+		menuUsuario.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listar");
-		mnUsuario.add(mntmNewMenuItem_4);
+		menuUsuario.add(mntmNewMenuItem_4);
 		
 		JMenu mnCliente = new JMenu("Cliente");
 		menuBar.add(mnCliente);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-		mnCliente.add(mntmNewMenuItem);
+		JMenuItem menuAlterarDados = new JMenuItem("Alterar dados");
+		mnCliente.add(menuAlterarDados);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
 		mnCliente.add(mntmNewMenuItem_1);
@@ -90,8 +98,27 @@ public class MainWindow extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		table = new JTable();
+		table.setBounds(27, 318, 544, 210);
+		panel.add(table);
+		
+		JButton btnListar = new JButton("Listar");
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection conn = DB.getConnection();
+				UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
+				System.out.println(	usuarioimp.findAll());
+				//table.setModel(model);
+				
+				
+				
+			}
+		});
+		btnListar.setBounds(50, 59, 119, 33);
+		panel.add(btnListar);
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/Kombi.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/truck4.jpg")));
 		lblNewLabel.setBounds(0, 0, 886, 539);
 		panel.add(lblNewLabel);
 		setSize(900, 600);

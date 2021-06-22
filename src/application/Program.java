@@ -93,7 +93,7 @@ public class Program {
 //		
 //		Connection conn = DB.getConnection();
 //		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-//		Cliente cli = clienteimp.findById(1);
+//		Cliente cli = clienteimp.findById(999);
 //		System.out.println(cli);
 		
 // -------------------------------testando criação do BD---------------------------------------------
@@ -129,9 +129,9 @@ public class Program {
 //		System.out.println(user);
 //----------------------------------- testando find all usuario ---------------
 		
-		Connection conn = DB.getConnection();
-		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
-	System.out.println(	usuarioimp.findAll());
+//		Connection conn = DB.getConnection();
+//		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
+//	System.out.println(	usuarioimp.findAll());
 // ------------------------------- testando delete by id usuario -----ok-------------------
 //		Connection conn = DB.getConnection();
 //		UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
@@ -161,7 +161,16 @@ public class Program {
 //		//System.out.println(usuarray);
 //		System.out.println(usuarray.get(1));// get theobject in position
 		
-//-------------------------------
+//------------------------------- //------------------------------testando insert de Cliente-------------------------------------------------------------------
+	
+//	Connection conn = DB.getConnection();
+//	ClienteDaoImplementacao clienteImp = new ClienteDaoImplementacao(conn);
+	
+//	Cliente cli = new Cliente(12, "nome", "telefone", "email", "endereco", "login"," senha");// não usar 0 a esquerda
+	
+//	clienteImp.insert(cli);
+	//Usuario userr = usuarioImp.findById(30);
+	//System.out.println(userr);
 	
 	
 	

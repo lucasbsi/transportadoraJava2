@@ -161,6 +161,7 @@ public class UsuarioDaoImplementacao implements UsuarioDao {
 			rs = st.executeQuery();
 			ArrayList<Usuario> usuArray = new ArrayList<Usuario>();
 			int i =0;
+			
 			while(rs.next()) {
 				Usuario usu = new Usuario();
 			usu.setIdUsuario(	rs.getInt("Id_usuario"));

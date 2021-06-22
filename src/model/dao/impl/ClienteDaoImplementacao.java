@@ -161,7 +161,7 @@ public class ClienteDaoImplementacao implements ClienteDao {
 	}
 
 	@Override
-	public List<Cliente> findAll() { //teste de interface half ok está retornando o a. objeto
+	public ArrayList<Cliente> findAll() { //teste de interface half ok está retornando o a. objeto
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {

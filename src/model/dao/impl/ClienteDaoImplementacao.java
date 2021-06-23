@@ -188,7 +188,7 @@ public class ClienteDaoImplementacao implements ClienteDao {
 			}
 //			System.out.println("Zebrou jão");
 //			return null;
-		
+			
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
 		}

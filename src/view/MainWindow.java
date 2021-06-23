@@ -29,7 +29,6 @@ public class MainWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -59,35 +58,31 @@ public class MainWindow extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu menuUsuario = new JMenu("Usuario");
-		menuBar.add(menuUsuario);
+		JMenu menuCadastro = new JMenu("Cadastro");
+		menuBar.add(menuCadastro);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Cadastrar");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+		JMenuItem mmlCliente = new JMenuItem("Cliente");
+		mmlCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCadastroUsuario telaCadNew = new TelaCadastroUsuario();
-				telaCadNew.setVisible(true);
+				TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
+				telaCadastroCliente.setVisible(true);
+			//	TelaCadastroUsuario telaCadNew = new TelaCadastroUsuario();
+			//	telaCadNew.setVisible(true);
 			}
 		});
-		menuUsuario.add(mntmNewMenuItem_3);
+		menuCadastro.add(mmlCliente);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listar");
-		menuUsuario.add(mntmNewMenuItem_4);
+		JMenuItem mnlFuncionario = new JMenuItem("Funcionario");
+		menuCadastro.add(mnlFuncionario);
 		
-		JMenu mnCliente = new JMenu("Cliente");
-		menuBar.add(mnCliente);
+		JMenu mnFrete = new JMenu("Frete");
+		menuBar.add(mnFrete);
 		
-		JMenuItem menuAlterarDados = new JMenuItem("Alterar dados");
-		mnCliente.add(menuAlterarDados);
+		JMenuItem mnlGeraFrete = new JMenuItem("Gerar Frete");
+		mnFrete.add(mnlGeraFrete);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
-		mnCliente.add(mntmNewMenuItem_1);
-		
-		JSeparator separator = new JSeparator();
-		mnCliente.add(separator);
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("New menu item");
-		mnCliente.add(mntmNewMenuItem_2);
+		JMenuItem mnlConsultaFrete = new JMenuItem("Consultar Frete");
+		mnFrete.add(mnlConsultaFrete);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -97,25 +92,6 @@ public class MainWindow extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
-		table = new JTable();
-		table.setBounds(27, 318, 544, 210);
-		panel.add(table);
-		
-		JButton btnListar = new JButton("Listar");
-		btnListar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Connection conn = DB.getConnection();
-				UsuarioDaoImplementacao usuarioimp = new UsuarioDaoImplementacao(conn);
-				System.out.println(	usuarioimp.findAll());
-				//table.setModel(model);
-				
-				
-				
-			}
-		});
-		btnListar.setBounds(50, 59, 119, 33);
-		panel.add(btnListar);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/truck4.jpg")));

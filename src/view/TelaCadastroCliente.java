@@ -39,7 +39,7 @@ public class TelaCadastroCliente extends JFrame {
 	private JTextField textFieldLogin;
 	private JTextField textFieldEmail;
 	private JTable table;
-	DefaultTableModel modelo = new DefaultTableModel();
+	static DefaultTableModel modelo = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -93,6 +93,8 @@ public class TelaCadastroCliente extends JFrame {
 				
 				
 				clienteImp.insert(cli);
+				TelaCadastroCliente.clearTable();
+				TelaCadastroCliente.loadTable();
 				//Usuario userr = usuarioImp.findById(30);
 				//System.out.println(userr);
 			}
@@ -131,6 +133,8 @@ public class TelaCadastroCliente extends JFrame {
 				Connection conn = DB.getConnection();
 				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				clienteimp.deleteById(idConvertido);
+				TelaCadastroCliente.clearTable();
+				TelaCadastroCliente.loadTable();
 			}
 		});
 		contentPane.add(btnDeletar);
@@ -142,13 +146,26 @@ public class TelaCadastroCliente extends JFrame {
 				Connection conn = DB.getConnection();
 				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				System.out.println(	clienteimp.findAll());
-				ArrayList<Cliente> lista = new ArrayList<Cliente>();
-				lista = clienteimp.findAll();
+			//	ArrayList<Cliente> lista = new ArrayList<Cliente>();
+			//lista = clienteimp.findAll();
 				
-				for(Cliente cli : lista) {
-				modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
-				}
-				DB.closeConnection();
+				TelaCadastroCliente.clearTable();
+				TelaCadastroCliente.loadTable();
+				
+//				for(Cliente cli : clienteimp.findAll()) {
+//				modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
+//				}
+//				DB.closeConnection();
+				
+//				ArrayList<Cliente> lista = new ArrayList<Cliente>();
+//				lista = clienteimp.findAll();
+//				
+//				for(Cliente cli : lista) {
+//				modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
+//				}
+//				DB.closeConnection();
+				
+				//TelaCadastroCliente.loadTable();
 				
 				
 			}
@@ -168,6 +185,7 @@ public class TelaCadastroCliente extends JFrame {
 		modelo.addColumn("Email");
 		modelo.addColumn("Login");
 		modelo.addColumn("Senha");
+		TelaCadastroCliente.loadTable();
 		
 //		Connection conn = DB.getConnection();
 //		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
@@ -274,7 +292,21 @@ public class TelaCadastroCliente extends JFrame {
 		setLocationRelativeTo(null);
 	}
 	
-	public void loadTable() {
+	public static void loadTable() {
+		Connection conn = DB.getConnection();
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+		for(Cliente cli : clienteimp.findAll()) {
+			modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
+			}
+		
+	}
+	public static void clearTable() {
+		Connection conn = DB.getConnection();
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+		for(Cliente cli : clienteimp.findAll()) {
+			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
+			modelo.setNumRows(0);
+			}
 		
 	}
 }

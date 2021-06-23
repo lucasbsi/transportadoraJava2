@@ -17,13 +17,16 @@ public class Cargo implements Serializable {
 	public Cargo() {
 	}
 
-	public Cargo(Integer idCargo, String descricao, float salario, Date dataInicio, Date dataFim) {
+
+
+	public Cargo(Integer idCargo, String descricao, float salario) {
+		super();
 		this.idCargo = idCargo;
 		this.descricao = descricao;
 		this.salario = salario;
-		//this.dataInicio = dataInicio;
-		//this.dataFim = dataFim;
 	}
+
+
 
 	public Integer getIdCargo() {
 		return idCargo;

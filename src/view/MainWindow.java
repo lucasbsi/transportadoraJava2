@@ -73,6 +73,12 @@ public class MainWindow extends JFrame {
 		menuCadastro.add(mmlCliente);
 		
 		JMenuItem mnlFuncionario = new JMenuItem("Funcionario");
+		mnlFuncionario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
+				telaCadastroFuncionario.setVisible(true);
+			}
+		});
 		menuCadastro.add(mnlFuncionario);
 		
 		JMenu mnFrete = new JMenu("Frete");

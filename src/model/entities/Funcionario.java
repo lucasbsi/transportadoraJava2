@@ -11,84 +11,98 @@ public class Funcionario extends Usuario implements Serializable {
 	private String nome;
 	private String telefone;
 	private String email;
-	private String endereco;
+	private String login;
+	private String senha;
 	private Cargo cargo;
-	private Usuario usuario;
 	
-	public Funcionario(){
-				
+	
+	public Funcionario() {
+		
 	}
 
-	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String endereco, Cargo cargo,
-			Usuario usuario) {
+
+	public Funcionario(Integer idFuncionario, String nome, String telefone, String email, String login, String senha,
+			Cargo cargo) {
+		
 		this.idFuncionario = idFuncionario;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
-		this.endereco = endereco;
+		this.login = login;
+		this.senha = senha;
 		this.cargo = cargo;
-		this.usuario = usuario;
 	}
+
 
 	public Integer getIdFuncionario() {
 		return idFuncionario;
 	}
 
+
 	public void setIdFuncionario(Integer idFuncionario) {
 		this.idFuncionario = idFuncionario;
 	}
+
 
 	public String getNome() {
 		return nome;
 	}
 
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 
 	public String getTelefone() {
 		return telefone;
 	}
 
+
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public String getEndereco() {
-		return endereco;
+
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 
 	public Cargo getCargo() {
 		return cargo;
 	}
 
+
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@Override
 	public int hashCode() {
@@ -97,6 +111,7 @@ public class Funcionario extends Usuario implements Serializable {
 		result = prime * result + ((idFuncionario == null) ? 0 : idFuncionario.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -115,12 +130,12 @@ public class Funcionario extends Usuario implements Serializable {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Funcionario [idFuncionario=" + idFuncionario + ", nome=" + nome + ", telefone=" + telefone + ", email="
-				+ email + ", endereco=" + endereco + ", cargo=" + cargo + ", usuario=" + usuario + "]";
+				+ email + ", login=" + login + ", senha=" + senha + ", cargo=" + cargo + "]";
 	}
-
 	
 	
 	

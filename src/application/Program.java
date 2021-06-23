@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
+import model.dao.impl.FuncionarioDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
+import model.entities.Cargo;
 import model.entities.Cliente;
 import model.entities.Frete;
 import model.entities.Funcionario;
@@ -171,12 +173,35 @@ public class Program {
 //	clienteImp.insert(cli);
 	//Usuario userr = usuarioImp.findById(30);
 	//System.out.println(userr);
+//--------------------------------------------------------- FUNCIONARIO TESTES ----------------------------	
 	
+		Connection conn = DB.getConnection();
+		FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
+		System.out.println(funcionarioImp);
 	
+	//insert ok
 	
+
+Cargo car = new Cargo(12, "Gerente", 1500);
+Funcionario fun = new Funcionario(12, "abc", "abc", "aa", "bb", "kkkkkk", car);
+//	
+//	funcionarioImp.insert(fun);
+		
+	//findall ok
 	
+//	System.out.println( funcionarioImp.findAll());
 	
+	// findid ok
 	
+//	System.out.println(funcionarioImp.findById(11));
+	
+	// delid ok
+	
+//		funcionarioImp.deleteById(11);
+	// attidp 
+		
+		funcionarioImp.update(fun);
+		
 	
 	
 	

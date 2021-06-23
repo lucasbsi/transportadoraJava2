@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
@@ -75,8 +76,8 @@ public class MainWindow extends JFrame {
 		JMenuItem mnlFuncionario = new JMenuItem("Funcionario");
 		mnlFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCadastroFuncionario telaCadastroFuncionario = new TelaCadastroFuncionario();
-				telaCadastroFuncionario.setVisible(true);
+				TelaCadastroFuncionario telaCadastroFuncionario2 = new TelaCadastroFuncionario();
+				telaCadastroFuncionario2.setVisible(true);
 			}
 		});
 		menuCadastro.add(mnlFuncionario);
@@ -85,9 +86,19 @@ public class MainWindow extends JFrame {
 		menuBar.add(mnFrete);
 		
 		JMenuItem mnlGeraFrete = new JMenuItem("Gerar Frete");
+		mnlGeraFrete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+			}
+		});
 		mnFrete.add(mnlGeraFrete);
 		
 		JMenuItem mnlConsultaFrete = new JMenuItem("Consultar Frete");
+		mnlConsultaFrete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+			}
+		});
 		mnFrete.add(mnlConsultaFrete);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

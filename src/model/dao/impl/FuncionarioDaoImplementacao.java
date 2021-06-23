@@ -26,7 +26,7 @@ public class FuncionarioDaoImplementacao implements FuncionarioDao {
 	@Override
 	public void insert(Funcionario obj) {// ok
 		PreparedStatement st = null;
-		System.out.println(obj.getCargo().getIdCargo());
+		//System.out.println(obj.getCargo().getIdCargo());
 		try {
 		
 			st = conn.prepareStatement(

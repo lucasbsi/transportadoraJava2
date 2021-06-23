@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import db.DB;
 import model.dao.impl.FuncionarioDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
-import model.entities.Cargo;
 import model.entities.Funcionario;
 import model.entities.Usuario;
 
@@ -63,7 +62,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	 */
 	public TelaCadastroFuncionario() {
 		setTitle("Central do Funcionario");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,21 +70,108 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		JButton botaoCadastrar = new JButton("Cadastrar");
 		botaoCadastrar.setBounds(387, 26, 114, 39);
-		
+		botaoCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int b = 0;
+
+				b = Integer.parseInt(textFieldID.getText());
+				
+				Connection conn = DB.getConnection();
+				FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
+				
+				Funcionario fun = new Funcionario(b, textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText(), null);
+				//textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText()
+				
+			//	int b = 0;
+
+				b = Integer.parseInt(textFieldID.getText());
+				
+				System.out.println();
+				
+			
+				
+				
+				funcionarioImp.insert(fun);
+				TelaCadastroFuncionario.clearTable();
+				TelaCadastroFuncionario.loadTable();
+				//Usuario userr = usuarioImp.findById(30);
+				//System.out.println(userr);
+			}
+		});
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
 		
 		JButton btnNewButton = new JButton("Atualizar Senha");
 		btnNewButton.setBounds(387, 76, 114, 39);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idConvertido = 0;
 
+				idConvertido = Integer.parseInt(textFieldID.getText());
+				
+				Connection conn = DB.getConnection();
+				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+				
+				Funcionario fun = funcionarioimp.findById(idConvertido);
+				fun.setSenha(textFieldSenha.getText());
+				
+				funcionarioimp.update(fun);
+				TelaCadastroFuncionario.clearTable();
+				TelaCadastroFuncionario.loadTable();
+				
+			}
+		});
 		contentPane.add(btnNewButton);
 		
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.setBounds(385, 126, 114, 39);
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idConvertido = 0;
+
+				idConvertido = Integer.parseInt(textFieldID.getText());
+				
+				Connection conn = DB.getConnection();
+				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+				funcionarioimp.deleteById(idConvertido);
+				TelaCadastroFuncionario.clearTable();
+				TelaCadastroFuncionario.loadTable();
+			}
+		});
 		contentPane.add(btnDeletar);
 		
 		JButton btnListar = new JButton("Listar Todos");
 		btnListar.setBounds(387, 224, 114, 39);
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection conn = DB.getConnection();
+				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+				System.out.println(	funcionarioimp.findAll());
+			//	ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
+			//lista = funcionarioimp.findAll();
+				
+				TelaCadastroFuncionario.clearTable();
+				TelaCadastroFuncionario.loadTable();
+				
+//				for(Funcionario fun : funcionarioimp.findAll()) {
+//				modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//				}
+//				DB.closeConnection();
+				
+//				ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
+//				lista = funcionarioimp.findAll();
+//				
+//				for(Funcionario fun : lista) {
+//				modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//				}
+//				DB.closeConnection();
+				
+				//TelaCadastroFuncionario.loadTable();
+				
+				
+			}
+		});
 		contentPane.add(btnListar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -101,8 +187,15 @@ public class TelaCadastroFuncionario extends JFrame {
 		modelo.addColumn("Email");
 		modelo.addColumn("Login");
 		modelo.addColumn("Senha");
-	//	TelaCadastroFuncionario.loadTable();
+		TelaCadastroFuncionario.loadTable();
 		
+//		Connection conn = DB.getConnection();
+//		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+//		ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
+//		lista = funcionarioimp.findAll();
+//		for(Funcionario fun : lista) {
+//		modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//		}
 		
 		
 		//--------------------------------------------
@@ -134,6 +227,10 @@ public class TelaCadastroFuncionario extends JFrame {
 				
 				Funcionario fun = funcionarioimp.findById(idConvertido);
 				System.out.println(fun);
+				
+				TelaCadastroFuncionario.clearTable();
+				TelaCadastroFuncionario.loadTable(fun);
+			
 			}
 		});
 		contentPane.add(btnBuscar);
@@ -201,21 +298,31 @@ public class TelaCadastroFuncionario extends JFrame {
 		setLocationRelativeTo(null);
 	}
 	
-//	public static void loadTable() {
-//		Connection conn = DB.getConnection();
-//		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+	public static void loadTable() {
+		Connection conn = DB.getConnection();
+		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+		for(Funcionario fun : funcionarioimp.findAll()) {
+			modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+			}
+		
+	}
+	public static void clearTable() {
+		Connection conn = DB.getConnection();
+		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+		for(Funcionario fun : funcionarioimp.findAll()) {
+			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
+			modelo.setNumRows(0);
+			}
+		
+	}
+	
+	public static void loadTable(Funcionario fun2) {
+		Connection conn = DB.getConnection();
+		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
 //		for(Funcionario fun : funcionarioimp.findAll()) {
-//			modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//			modelo.addRow(new Object[] {fun2.getIdFuncionario(), fun2.getNome(), fun2.getTelefone(), fun2.getEmail(), fun2.getLogin(), fun2.getSenha()});
 //			}
-//		
-//	}
-//	public static void clearTable() {
-//		Connection conn = DB.getConnection();
-//		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-//		for(Funcionario fun : funcionarioimp.findAll()) {
-//			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
-//			modelo.setNumRows(0);
-//			}
-//		
-//	}
+		modelo.addRow(new Object[] {fun2.getIdFuncionario(), fun2.getNome(), fun2.getTelefone(), fun2.getEmail(), fun2.getLogin(), fun2.getSenha()});
+		
+	}
 }

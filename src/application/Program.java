@@ -175,15 +175,15 @@ public class Program {
 	//System.out.println(userr);
 //--------------------------------------------------------- FUNCIONARIO TESTES ----------------------------	
 	
-		Connection conn = DB.getConnection();
-		FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
-		System.out.println(funcionarioImp);
-	
-	//insert ok
-	
-
-Cargo car = new Cargo(12, "Gerente", 1500);
-Funcionario fun = new Funcionario(12, "abc", "abc", "aa", "bb", "kkkkkk", car);
+//		Connection conn = DB.getConnection();
+//		FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
+//		System.out.println(funcionarioImp);
+//	
+//	//insert ok
+//	
+//
+//Cargo car = new Cargo(12, "Gerente", 1500);
+//Funcionario fun = new Funcionario(12, "abc", "abc", "aa", "bb", "kkkkkk", car);
 //	
 //	funcionarioImp.insert(fun);
 		
@@ -198,9 +198,9 @@ Funcionario fun = new Funcionario(12, "abc", "abc", "aa", "bb", "kkkkkk", car);
 	// delid ok
 	
 //		funcionarioImp.deleteById(11);
-	// attidp 
+	// attidp ok
 		
-		funcionarioImp.update(fun);
+	//	funcionarioImp.update(fun);
 		
 	
 	

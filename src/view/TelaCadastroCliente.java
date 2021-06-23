@@ -9,8 +9,10 @@ import javax.swing.border.EmptyBorder;
 
 import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
+import model.dao.impl.FuncionarioDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cliente;
+import model.entities.Funcionario;
 import model.entities.Usuario;
 
 import javax.swing.JLabel;
@@ -61,8 +63,8 @@ public class TelaCadastroCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroCliente() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Central do Cliente");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,6 +119,8 @@ public class TelaCadastroCliente extends JFrame {
 				cli.setSenha(textFieldSenha.getText());
 				
 				clienteimp.update(cli);
+				TelaCadastroCliente.clearTable();
+				TelaCadastroCliente.loadTable();
 				
 			}
 		});
@@ -225,6 +229,9 @@ public class TelaCadastroCliente extends JFrame {
 				
 				Cliente cli = clienteimp.findById(idConvertido);
 				System.out.println(cli);
+				
+				TelaCadastroCliente.clearTable();
+				TelaCadastroCliente.loadTable(cli);
 			}
 		});
 		contentPane.add(btnBuscar);
@@ -307,6 +314,16 @@ public class TelaCadastroCliente extends JFrame {
 			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
 			modelo.setNumRows(0);
 			}
+		
+	}
+	
+	public static void loadTable(Cliente cli2) {
+		Connection conn = DB.getConnection();
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//		for(Funcionario fun : funcionarioimp.findAll()) {
+//			modelo.addRow(new Object[] {cli2.getIdFuncionario(), cli2.getNome(), cli2.getTelefone(), cli2.getEmail(), cli2.getLogin(), cli2.getSenha()});
+//			}
+		modelo.addRow(new Object[] {cli2.getIdCliente(), cli2.getNome(), cli2.getTelefone(), cli2.getEmail(), cli2.getLogin(), cli2.getSenha()});
 		
 	}
 }

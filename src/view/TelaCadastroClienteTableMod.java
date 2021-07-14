@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import db.DB;
+import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.FuncionarioDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
+import model.entities.Cliente;
 import model.entities.Funcionario;
 import model.entities.Usuario;
 
@@ -27,8 +29,10 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class TelaCadastroFuncionario extends JFrame {
+public class TelaCadastroClienteTableMod extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -48,7 +52,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastroFuncionario frame = new TelaCadastroFuncionario();
+					TelaCadastroClienteTableMod frame = new TelaCadastroClienteTableMod();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,27 +64,34 @@ public class TelaCadastroFuncionario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastroFuncionario() {
-		setTitle("Central do Funcionario");
+	public TelaCadastroClienteTableMod() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("Central do Cliente");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		// ----------------------------- EVENTO CADASTRAR ----------------------------------------------
 		JButton botaoCadastrar = new JButton("Cadastrar");
 		botaoCadastrar.setBounds(387, 26, 114, 39);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//TelaCadastroCliente.clearTable();
 				int b = 0;
 
 				b = Integer.parseInt(textFieldID.getText());
 				
 				Connection conn = DB.getConnection();
-				FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
+				ClienteDaoImplementacao clienteImp = new ClienteDaoImplementacao(conn);
 				
-				Funcionario fun = new Funcionario(b, textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText(), null);
+			Cliente cli = new Cliente(b, textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText());
 				//textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText()
 				
 			//	int b = 0;
@@ -92,16 +103,16 @@ public class TelaCadastroFuncionario extends JFrame {
 			
 				
 				
-				funcionarioImp.insert(fun);
-				TelaCadastroFuncionario.clearTable();
-				TelaCadastroFuncionario.loadTable();
+				clienteImp.insert(cli);
+				TelaCadastroClienteTableMod.clearTable();
+				TelaCadastroClienteTableMod.loadTable();
 				//Usuario userr = usuarioImp.findById(30);
 				//System.out.println(userr);
 			}
 		});
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
-		
+		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
 		JButton btnNewButton = new JButton("Atualizar Senha");
 		btnNewButton.setBounds(387, 76, 114, 39);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -111,19 +122,19 @@ public class TelaCadastroFuncionario extends JFrame {
 				idConvertido = Integer.parseInt(textFieldID.getText());
 				
 				Connection conn = DB.getConnection();
-				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				
-				Funcionario fun = funcionarioimp.findById(idConvertido);
-				fun.setSenha(textFieldSenha.getText());
+				Cliente cli = clienteimp.findById(idConvertido);
+				cli.setSenha(textFieldSenha.getText());
 				
-				funcionarioimp.update(fun);
-				TelaCadastroFuncionario.clearTable();
-				TelaCadastroFuncionario.loadTable();
+				clienteimp.update(cli);
+				TelaCadastroClienteTableMod.clearTable();
+				TelaCadastroClienteTableMod.loadTable();
 				
 			}
 		});
 		contentPane.add(btnNewButton);
-		
+		//--------------------------------- EVENTO DELETAR ----------------------------------------------
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.setBounds(385, 126, 114, 39);
 		btnDeletar.addActionListener(new ActionListener() {
@@ -133,41 +144,47 @@ public class TelaCadastroFuncionario extends JFrame {
 				idConvertido = Integer.parseInt(textFieldID.getText());
 				
 				Connection conn = DB.getConnection();
-				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-				funcionarioimp.deleteById(idConvertido);
-				TelaCadastroFuncionario.clearTable();
-				TelaCadastroFuncionario.loadTable();
+				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+				clienteimp.deleteById(idConvertido);
+				TelaCadastroClienteTableMod.clearTable();
+				TelaCadastroClienteTableMod.loadTable();
 			}
 		});
 		contentPane.add(btnDeletar);
-		
+		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
 		JButton btnListar = new JButton("Listar Todos");
 		btnListar.setBounds(387, 224, 114, 39);
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
+					
+				TelaCadastroClienteTableMod.loadTable();
 				Connection conn = DB.getConnection();
-				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-				System.out.println(	funcionarioimp.findAll());
-			//	ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-			//lista = funcionarioimp.findAll();
+				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+				System.out.println(	clienteimp.findAll());
+			//	ArrayList<Cliente> lista = new ArrayList<Cliente>();
+			//lista = clienteimp.findAll();
 				
-				TelaCadastroFuncionario.clearTable();
-				TelaCadastroFuncionario.loadTable();
+				TelaCadastroClienteTableMod.clearTable();
+				TelaCadastroClienteTableMod.loadTable();
 				
-//				for(Funcionario fun : funcionarioimp.findAll()) {
-//				modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//				for(Cliente cli : clienteimp.findAll()) {
+//				modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
 //				}
 //				DB.closeConnection();
 				
-//				ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-//				lista = funcionarioimp.findAll();
+//				ArrayList<Cliente> lista = new ArrayList<Cliente>();
+//				lista = clienteimp.findAll();
 //				
-//				for(Funcionario fun : lista) {
-//				modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//				for(Cliente cli : lista) {
+//				modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
 //				}
 //				DB.closeConnection();
 				
-				//TelaCadastroFuncionario.loadTable();
+				//TelaCadastroCliente.loadTable();
 				
 				
 			}
@@ -177,25 +194,33 @@ public class TelaCadastroFuncionario extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 331, 579, 180);
 		contentPane.add(scrollPane);
-		//------------------------------table--------------
-		table = new JTable(modelo);
+		//------------------------------TABLE ----------------------------------------------------
+		table = new JTable(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"CPF", "Nome", "Telefone", "Email", "Login", "Senha"
+			}
+		));
 		scrollPane.setViewportView(table);
 		
-		modelo.addColumn("Id_funcionario");
+		modelo.addColumn("Id_cliente");
 		modelo.addColumn("Nome");
 		modelo.addColumn("Telfone");
 		modelo.addColumn("Email");
 		modelo.addColumn("Login");
 		modelo.addColumn("Senha");
-		TelaCadastroFuncionario.loadTable();
-		modelo.setColumnCount(6);
+		
+		TelaCadastroClienteTableMod.clearTable();
+		TelaCadastroClienteTableMod.loadTable();
+//---------------------------------------------------------------------
 		
 //		Connection conn = DB.getConnection();
-//		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-//		ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-//		lista = funcionarioimp.findAll();
-//		for(Funcionario fun : lista) {
-//		modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//		ArrayList<Cliente> lista = new ArrayList<Cliente>();
+//		lista = clienteimp.findAll();
+//		for(Cliente cli : lista) {
+//		modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
 //		}
 		
 		
@@ -224,14 +249,13 @@ public class TelaCadastroFuncionario extends JFrame {
 
 				idConvertido = Integer.parseInt(textFieldID.getText());
 				Connection conn = DB.getConnection();
-				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				
-				Funcionario fun = funcionarioimp.findById(idConvertido);
-				System.out.println(fun);
+				Cliente cli = clienteimp.findById(idConvertido);
+				System.out.println(cli);
 				
-				TelaCadastroFuncionario.clearTable();
-				TelaCadastroFuncionario.loadTable(fun);
-			
+				TelaCadastroClienteTableMod.clearTable();
+				TelaCadastroClienteTableMod.loadTable(cli);
 			}
 		});
 		contentPane.add(btnBuscar);
@@ -301,29 +325,36 @@ public class TelaCadastroFuncionario extends JFrame {
 	
 	public static void loadTable() {
 		Connection conn = DB.getConnection();
-		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-		for(Funcionario fun : funcionarioimp.findAll()) {
-			modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+		for(Cliente cli : clienteimp.findAll()) {
+			modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
 			}
+		
 		
 	}
 	public static void clearTable() {
 		Connection conn = DB.getConnection();
-		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-		for(Funcionario fun : funcionarioimp.findAll()) {
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+		for(Cliente cli : clienteimp.findAll()) {
 			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
 			modelo.setNumRows(0);
+			
 			}
 		
 	}
 	
-	public static void loadTable(Funcionario fun2) {
+	public static void loadTable(Cliente cli2) {
 		Connection conn = DB.getConnection();
-		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
+		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 //		for(Funcionario fun : funcionarioimp.findAll()) {
-//			modelo.addRow(new Object[] {fun2.getIdFuncionario(), fun2.getNome(), fun2.getTelefone(), fun2.getEmail(), fun2.getLogin(), fun2.getSenha()});
+//			modelo.addRow(new Object[] {cli2.getIdFuncionario(), cli2.getNome(), cli2.getTelefone(), cli2.getEmail(), cli2.getLogin(), cli2.getSenha()});
 //			}
-		modelo.addRow(new Object[] {fun2.getIdFuncionario(), fun2.getNome(), fun2.getTelefone(), fun2.getEmail(), fun2.getLogin(), fun2.getSenha()});
+		modelo.addRow(new Object[] {cli2.getIdCliente(), cli2.getNome(), cli2.getTelefone(), cli2.getEmail(), cli2.getLogin(), cli2.getSenha()});
 		
+	}
+	
+	public static void createColumn(){
+		
+	
 	}
 }

@@ -29,6 +29,10 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaCadastroCliente extends JFrame {
 
@@ -40,8 +44,8 @@ public class TelaCadastroCliente extends JFrame {
 	private JTextField textFieldSenha;
 	private JTextField textFieldLogin;
 	private JTextField textFieldEmail;
-	private JTable table;
 	static DefaultTableModel modelo = new DefaultTableModel();
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -63,6 +67,12 @@ public class TelaCadastroCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroCliente() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Central do Cliente");
 		setBounds(100, 100, 450, 300);
@@ -70,11 +80,12 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		// ----------------------------- EVENTO CADASTRAR ----------------------------------------------
 		JButton botaoCadastrar = new JButton("Cadastrar");
 		botaoCadastrar.setBounds(387, 26, 114, 39);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//TelaCadastroCliente.clearTable();
 				int b = 0;
 
 				b = Integer.parseInt(textFieldID.getText());
@@ -103,7 +114,7 @@ public class TelaCadastroCliente extends JFrame {
 		});
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
-		
+		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
 		JButton btnNewButton = new JButton("Atualizar Senha");
 		btnNewButton.setBounds(387, 76, 114, 39);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -125,7 +136,7 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(btnNewButton);
-		
+		//--------------------------------- EVENTO DELETAR ----------------------------------------------
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.setBounds(385, 126, 114, 39);
 		btnDeletar.addActionListener(new ActionListener() {
@@ -142,11 +153,17 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(btnDeletar);
-		
+		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
 		JButton btnListar = new JButton("Listar Todos");
 		btnListar.setBounds(387, 224, 114, 39);
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
+					
+				TelaCadastroCliente.loadTable();
 				Connection conn = DB.getConnection();
 				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				System.out.println(	clienteimp.findAll());
@@ -179,8 +196,15 @@ public class TelaCadastroCliente extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 331, 579, 180);
 		contentPane.add(scrollPane);
-		//------------------------------table--------------
+		
 		table = new JTable(modelo);
+		table.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				table.getSelectedRow()
+//			}
+		});
+		//scrollPane.setColumnHeaderView(table);
 		scrollPane.setViewportView(table);
 		
 		modelo.addColumn("Id_cliente");
@@ -189,7 +213,11 @@ public class TelaCadastroCliente extends JFrame {
 		modelo.addColumn("Email");
 		modelo.addColumn("Login");
 		modelo.addColumn("Senha");
+		modelo.setColumnCount(6);
+		
+		TelaCadastroCliente.clearTable();
 		TelaCadastroCliente.loadTable();
+//---------------------------------------------------------------------
 		
 //		Connection conn = DB.getConnection();
 //		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
@@ -242,7 +270,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel labelID = new JLabel("ID:");
+		JLabel labelID = new JLabel("CPF:");
 		labelID.setBounds(10, 36, 48, 14);
 		panel.add(labelID);
 		
@@ -304,7 +332,9 @@ public class TelaCadastroCliente extends JFrame {
 		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 		for(Cliente cli : clienteimp.findAll()) {
 			modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
+
 			}
+		
 		
 	}
 	public static void clearTable() {
@@ -313,6 +343,7 @@ public class TelaCadastroCliente extends JFrame {
 		for(Cliente cli : clienteimp.findAll()) {
 			//modelo.addRow(new Object[] {"", "", "", "", "", ""});
 			modelo.setNumRows(0);
+			
 			}
 		
 	}
@@ -325,5 +356,11 @@ public class TelaCadastroCliente extends JFrame {
 //			}
 		modelo.addRow(new Object[] {cli2.getIdCliente(), cli2.getNome(), cli2.getTelefone(), cli2.getEmail(), cli2.getLogin(), cli2.getSenha()});
 		
+		
+	}
+	
+	public static void createColumn(){
+		
+	
 	}
 }

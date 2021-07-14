@@ -61,7 +61,7 @@ public class MainWindow extends JFrame {
 		
 		JMenu menuCadastro = new JMenu("Cadastro");
 		menuBar.add(menuCadastro);
-		
+		//------------------------- CHAMADA DA Tela Cliente -------------------------------
 		JMenuItem mmlCliente = new JMenuItem("Cliente");
 		mmlCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,7 +72,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		menuCadastro.add(mmlCliente);
-		
+		//------------------------- CHAMADA DA Tela Funcionario -------------------------------
 		JMenuItem mnlFuncionario = new JMenuItem("Funcionario");
 		mnlFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,6 +100,33 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnFrete.add(mnlConsultaFrete);
+		
+		JMenu mnRelatorio = new JMenu("Relat\u00F3rios");
+		menuBar.add(mnRelatorio);
+		
+		JMenuItem mnIFretes = new JMenuItem("Fretes");
+		mnIFretes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+			}
+		});
+		mnRelatorio.add(mnIFretes);
+		
+		JMenuItem mnIFuncionarios = new JMenuItem("Funcion\u00E1rios");
+		mnIFuncionarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+			}
+		});
+		mnRelatorio.add(mnIFuncionarios);
+		
+		JMenuItem mnlClientes = new JMenuItem("Clientes");
+		mnlClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+			}
+		});
+		mnRelatorio.add(mnlClientes);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));

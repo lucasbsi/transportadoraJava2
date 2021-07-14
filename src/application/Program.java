@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
+import model.dao.impl.FreteDaoImplementacao;
 import model.dao.impl.FuncionarioDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cargo;
@@ -202,8 +203,39 @@ public class Program {
 		
 	//	funcionarioImp.update(fun);
 		
-	
-	
+//----------------------------------------FRETE TESTES -------------------------------------------------------------------------
+		Connection conn = DB.getConnection();
+		FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
+		System.out.println(freteImp);
+		
+		ClienteDaoImplementacao clienteImp = new ClienteDaoImplementacao(conn);
+		
+		Cliente cli = clienteImp.findById(777);
+		System.out.println(cli);
+		
+		FuncionarioDaoImplementacao funcionarioImp = new FuncionarioDaoImplementacao(conn);
+		
+		Funcionario fun = funcionarioImp.findById(4321);
+		System.out.println(fun);
+		
+		Status status = new Status(31,"Rota"); // dps implementar o metodo findById no status e usar ele
+		System.out.println("valor do status"+status);
+		//status =null;
+		//System.out.println("valor do status apos setar objto null"+status);
+		
+		Frete frete = new Frete(9902, "Notebook",(double)4500, "ATK001", "Rua cambuci pg guarus", 9, cli, fun, status);
+		
+		System.out.println(frete.getCliente().getIdCliente());
+		
+		System.out.println(frete.getFuncionario().getIdFuncionario());
+		
+		System.out.println(frete.getStatus().getIdStatus());
+		
+		
+		System.out.println(frete);
+				
+		
+		freteImp.insert(frete);
 	
 	
 }

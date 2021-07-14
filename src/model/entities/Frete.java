@@ -1,6 +1,14 @@
 package model.entities;
 
-public class Frete {
+import java.io.Serializable;
+
+public class Frete implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idFrete;
 	private String descricao;
 	private Double valor;

@@ -115,7 +115,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
 		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
-		JButton botaoAtualizar = new JButton("Atualizar Senha");
+		JButton botaoAtualizar = new JButton("Atualizar");
 		botaoAtualizar.setBounds(387, 76, 114, 39);
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,9 +163,9 @@ public class TelaCadastroCliente extends JFrame {
 		botaoDeletar.setEnabled(false);
 		
 		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
-		JButton btnListar = new JButton("Listar Todos");
-		btnListar.setBounds(387, 224, 114, 39);
-		btnListar.addActionListener(new ActionListener() {
+		JButton botaoListar = new JButton("Listar Todos");
+		botaoListar.setBounds(387, 224, 114, 39);
+		botaoListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
@@ -201,7 +201,7 @@ public class TelaCadastroCliente extends JFrame {
 				
 			}
 		});
-		contentPane.add(btnListar);
+		contentPane.add(botaoListar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 331, 579, 180);
@@ -245,10 +245,10 @@ public class TelaCadastroCliente extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o ID e clique em Buscar");
 		lblNewLabel_3.setBounds(10, 201, 304, 14);
 		contentPane.add(lblNewLabel_3);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(387, 174, 114, 39);
-		btnBuscar.addActionListener(new ActionListener() {
+		// --------------------------------------EVENTO BUSCAR ------------------------
+		JButton botaoBuscar = new JButton("Buscar");
+		botaoBuscar.setBounds(387, 174, 114, 39);
+		botaoBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				botaoDeletar.setEnabled(true);
 				botaoAtualizar.setEnabled(true);
@@ -265,8 +265,8 @@ public class TelaCadastroCliente extends JFrame {
 				TelaCadastroCliente.loadTable(cli);
 			}
 		});
-		contentPane.add(btnBuscar);
-		
+		contentPane.add(botaoBuscar);
+		// ----------------------------------- JPANEL
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 346, 150);
 		panel.setBorder(new TitledBorder(null, "Cadastrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));

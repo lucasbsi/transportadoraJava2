@@ -27,6 +27,8 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaCadastroFuncionario extends JFrame {
 
@@ -38,8 +40,9 @@ public class TelaCadastroFuncionario extends JFrame {
 	private JTextField textFieldSenha;
 	private JTextField textFieldLogin;
 	private JTextField textFieldEmail;
-	private JTable table;
 	static DefaultTableModel modelo = new DefaultTableModel();
+	private JTable table;
+	
 
 	/**
 	 * Launch the application.
@@ -61,13 +64,14 @@ public class TelaCadastroFuncionario extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroFuncionario() {
+		
 		setTitle("Central do Funcionario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+		//----------------------------------EVENTO CADASTRAR --------------------------------
 		JButton botaoCadastrar = new JButton("Cadastrar");
 		botaoCadastrar.setBounds(387, 26, 114, 39);
 		botaoCadastrar.addActionListener(new ActionListener() {
@@ -101,10 +105,10 @@ public class TelaCadastroFuncionario extends JFrame {
 		});
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
-		
-		JButton btnNewButton = new JButton("Atualizar Senha");
-		btnNewButton.setBounds(387, 76, 114, 39);
-		btnNewButton.addActionListener(new ActionListener() {
+		// ----------------------------- EVENTO ATUALIZAR -------------------------------
+		JButton botaoAtualizar = new JButton("Atualizar");
+		botaoAtualizar.setBounds(387, 76, 114, 39);
+		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idConvertido = 0;
 
@@ -114,7 +118,15 @@ public class TelaCadastroFuncionario extends JFrame {
 				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
 				
 				Funcionario fun = funcionarioimp.findById(idConvertido);
+				
+				fun.setIdFuncionario(idConvertido);
+				fun.setNome(textFieldNome.getText());
+				fun.setTelefone(textFieldTelefone.getText());
+				fun.setLogin(textFieldLogin.getText());
 				fun.setSenha(textFieldSenha.getText());
+				fun.setEmail(textFieldEmail.getText());
+				
+				
 				
 				funcionarioimp.update(fun);
 				TelaCadastroFuncionario.clearTable();
@@ -122,11 +134,12 @@ public class TelaCadastroFuncionario extends JFrame {
 				
 			}
 		});
-		contentPane.add(btnNewButton);
-		
-		JButton btnDeletar = new JButton("Deletar");
-		btnDeletar.setBounds(385, 126, 114, 39);
-		btnDeletar.addActionListener(new ActionListener() {
+		contentPane.add(botaoAtualizar);
+		botaoAtualizar.setEnabled(false);
+		// ------------------------ ----------- EVENTO DELETAR -----------------------------------------
+		JButton botaoDeletar = new JButton("Deletar");
+		botaoDeletar.setBounds(385, 126, 114, 39);
+		botaoDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idConvertido = 0;
 
@@ -139,12 +152,19 @@ public class TelaCadastroFuncionario extends JFrame {
 				TelaCadastroFuncionario.loadTable();
 			}
 		});
-		contentPane.add(btnDeletar);
-		
-		JButton btnListar = new JButton("Listar Todos");
-		btnListar.setBounds(387, 224, 114, 39);
-		btnListar.addActionListener(new ActionListener() {
+		contentPane.add(botaoDeletar);
+		botaoDeletar.setEnabled(false);
+		// --------------------------------- EVENTO LISTAR TODOS ----------------------------------
+		JButton botaoListar = new JButton("Listar Todos");
+		botaoListar.setBounds(387, 224, 114, 39);
+		botaoListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				botaoDeletar.setEnabled(true);
+				botaoAtualizar.setEnabled(true);
+				TelaCadastroFuncionario.loadTable();
+				
 				Connection conn = DB.getConnection();
 				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
 				System.out.println(	funcionarioimp.findAll());
@@ -172,13 +192,28 @@ public class TelaCadastroFuncionario extends JFrame {
 				
 			}
 		});
-		contentPane.add(btnListar);
+		contentPane.add(botaoListar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 331, 579, 180);
 		contentPane.add(scrollPane);
 		//------------------------------table--------------
 		table = new JTable(modelo);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int number = table.getSelectedRow();
+				textFieldID.setText(table.getValueAt(number, 0).toString());
+				textFieldNome.setText(table.getValueAt(number, 1).toString());
+				textFieldTelefone.setText(table.getValueAt(number, 2).toString());
+				textFieldLogin.setText(table.getValueAt(number, 3).toString());
+				textFieldSenha.setText(table.getValueAt(number, 4).toString());
+				textFieldEmail.setText(table.getValueAt(number, 5).toString());
+				botaoDeletar.setEnabled(true);
+				botaoAtualizar.setEnabled(true);
+				botaoCadastrar.setEnabled(false);
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		modelo.addColumn("Id_funcionario");
@@ -187,38 +222,18 @@ public class TelaCadastroFuncionario extends JFrame {
 		modelo.addColumn("Email");
 		modelo.addColumn("Login");
 		modelo.addColumn("Senha");
-		TelaCadastroFuncionario.loadTable();
 		modelo.setColumnCount(6);
 		
-//		Connection conn = DB.getConnection();
-//		FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(conn);
-//		ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-//		lista = funcionarioimp.findAll();
-//		for(Funcionario fun : lista) {
-//		modelo.addRow(new Object[] {fun.getIdFuncionario(), fun.getNome(), fun.getTelefone(), fun.getEmail(), fun.getLogin(), fun.getSenha()});
-//		}
-		
-		
-		//--------------------------------------------
-		JLabel lblNewLabel_1 = new JLabel("S\u00F3 \u00E9 poss\u00EDvel alterar a senha.");
-		lblNewLabel_1.setBounds(10, 225, 261, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("ALTERAR SENHA: Informe o ID e SENHA e clique em Atualizar");
-		lblNewLabel_2.setBounds(10, 250, 353, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblParaDeletarInforme = new JLabel("DELETAR: informe apenas o ID e clique Deletar");
-		lblParaDeletarInforme.setBounds(10, 288, 304, 14);
-		contentPane.add(lblParaDeletarInforme);
+		TelaCadastroFuncionario.clearTable();
+		TelaCadastroFuncionario.loadTable();
 		
 		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o ID e clique em Buscar");
 		lblNewLabel_3.setBounds(10, 201, 304, 14);
 		contentPane.add(lblNewLabel_3);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(387, 174, 114, 39);
-		btnBuscar.addActionListener(new ActionListener() {
+		//--------------------------------------EVENTO BUSCAR -------------------------------
+		JButton botaoBuscar = new JButton("Buscar");
+		botaoBuscar.setBounds(387, 174, 114, 39);
+		botaoBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idConvertido = 0;
 
@@ -234,8 +249,8 @@ public class TelaCadastroFuncionario extends JFrame {
 			
 			}
 		});
-		contentPane.add(btnBuscar);
-		
+		contentPane.add(botaoBuscar);
+		// ----------------------------------- JPANEL
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 346, 150);
 		panel.setBorder(new TitledBorder(null, "Cadastrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -295,6 +310,23 @@ public class TelaCadastroFuncionario extends JFrame {
 		textFieldEmail.setBounds(218, 30, 96, 20);
 		panel.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
+		
+		JButton botaoLimpar = new JButton("Limpar");
+		botaoLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textFieldID.setText(null);
+				textFieldNome.setText(null);
+				textFieldTelefone.setText(null);
+				textFieldLogin.setText(null);
+				textFieldSenha.setText(null);
+				textFieldEmail.setText(null);
+				botaoDeletar.setEnabled(false);
+				botaoAtualizar.setEnabled(false);
+				botaoCadastrar.setEnabled(true);
+			}
+		});
+		botaoLimpar.setBounds(33, 116, 89, 23);
+		panel.add(botaoLimpar);
 		setSize(628, 576);
 		setLocationRelativeTo(null);
 	}

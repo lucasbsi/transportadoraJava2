@@ -76,14 +76,23 @@ public class FuncionarioDaoImplementacao implements FuncionarioDao {
 		
 			st = conn.prepareStatement(
 					
-					"UPDATE `transportadora_br_v2`.`funcionario`"
-					+"SET"
-					+"`Senha` = ?"
-					+"WHERE `Id_funcionario` = ?;");
+					"UPDATE `transportadora_br_v2`.`funcionario`\r\n" + 
+							"SET\r\n" + 
+							"`Id_funcionario` = ?,\r\n" + 
+							"`Nome` = ?,\r\n" + 
+							"`Telefone` = ?,\r\n" + 
+							"`Email` = ?,\r\n" + 
+							"`Login` = ?,\r\n" + 
+							"`Senha` = ?\r\n" + 
+							"WHERE `Id_funcionario` = ?");
 			
-			st.setInt(2, obj.getIdFuncionario());
-			//st.setString(2, obj.getLogin());
-			st.setString(1, obj.getSenha());
+			st.setInt(1, obj.getIdFuncionario());
+			st.setString(2, obj.getNome());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getEmail());
+			st.setString(5, obj.getLogin());
+			st.setString(6, obj.getSenha());
+			st.setInt(7, obj.getIdFuncionario());
 			
 			int rowsAffected = st.executeUpdate();
 			System.out.println("O rowsAffected foi de:"+ rowsAffected);

@@ -74,14 +74,24 @@ public class ClienteDaoImplementacao implements ClienteDao {
 		
 			st = conn.prepareStatement(
 					
-					"UPDATE `transportadora_br_v2`.`cliente`"
-					+"SET"
-					+"`Senha` = ?"
-					+"WHERE `Id_cliente` = ?;");
+					"UPDATE `transportadora_br_v2`.`cliente`\r\n" + 
+					"SET\r\n" + 
+					"`Id_cliente` = ?,\r\n" + 
+					"`Nome` = ?,\r\n" + 
+					"`Telefone` = ?,\r\n" + 
+					"`Email` = ?,\r\n" + 
+					"`Login` = ?,\r\n" + 
+					"`Senha` = ?\r\n" + 
+					"WHERE `Id_cliente` = ?");
 			
-			st.setInt(2, obj.getIdCliente());
-			//st.setString(2, obj.getLogin());
-			st.setString(1, obj.getSenha());
+		
+			st.setInt(1, obj.getIdCliente());
+			st.setString(2, obj.getNome());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getEmail());
+			st.setString(5, obj.getLogin());
+			st.setString(6, obj.getSenha());
+			st.setInt(7, obj.getIdCliente());
 			
 			int rowsAffected = st.executeUpdate();
 			System.out.println("O rowsAffected foi de:"+ rowsAffected);

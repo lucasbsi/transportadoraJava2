@@ -115,9 +115,9 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(botaoCadastrar);
 		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
-		JButton btnNewButton = new JButton("Atualizar Senha");
-		btnNewButton.setBounds(387, 76, 114, 39);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton botaoAtualizar = new JButton("Atualizar Senha");
+		botaoAtualizar.setBounds(387, 76, 114, 39);
+		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idConvertido = 0;
 
@@ -127,7 +127,13 @@ public class TelaCadastroCliente extends JFrame {
 				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
 				
 				Cliente cli = clienteimp.findById(idConvertido);
+				
+				cli.setIdCliente(idConvertido);
+				cli.setNome(textFieldNome.getText());
+				cli.setTelefone(textFieldTelefone.getText());
+				cli.setLogin(textFieldLogin.getText());
 				cli.setSenha(textFieldSenha.getText());
+				cli.setEmail(textFieldEmail.getText());
 				
 				clienteimp.update(cli);
 				TelaCadastroCliente.clearTable();
@@ -135,11 +141,12 @@ public class TelaCadastroCliente extends JFrame {
 				
 			}
 		});
-		contentPane.add(btnNewButton);
+		contentPane.add(botaoAtualizar);
+		botaoAtualizar.setEnabled(false);
 		//--------------------------------- EVENTO DELETAR ----------------------------------------------
-		JButton btnDeletar = new JButton("Deletar");
-		btnDeletar.setBounds(385, 126, 114, 39);
-		btnDeletar.addActionListener(new ActionListener() {
+		JButton botaoDeletar = new JButton("Deletar");
+		botaoDeletar.setBounds(385, 126, 114, 39);
+		botaoDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idConvertido = 0;
 
@@ -152,7 +159,9 @@ public class TelaCadastroCliente extends JFrame {
 				TelaCadastroCliente.loadTable();
 			}
 		});
-		contentPane.add(btnDeletar);
+		contentPane.add(botaoDeletar);
+		botaoDeletar.setEnabled(false);
+		
 		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
 		JButton btnListar = new JButton("Listar Todos");
 		btnListar.setBounds(387, 224, 114, 39);
@@ -161,7 +170,8 @@ public class TelaCadastroCliente extends JFrame {
 				
 				
 				
-				
+				botaoDeletar.setEnabled(true);
+				botaoAtualizar.setEnabled(true);
 					
 				TelaCadastroCliente.loadTable();
 				Connection conn = DB.getConnection();
@@ -203,6 +213,20 @@ public class TelaCadastroCliente extends JFrame {
 //			public void mouseClicked(MouseEvent e) {
 //				table.getSelectedRow()
 //			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int number = table.getSelectedRow();
+				textFieldID.setText(table.getValueAt(number, 0).toString());
+				textFieldNome.setText(table.getValueAt(number, 1).toString());
+				textFieldTelefone.setText(table.getValueAt(number, 2).toString());
+				textFieldLogin.setText(table.getValueAt(number, 3).toString());
+				textFieldSenha.setText(table.getValueAt(number, 4).toString());
+				textFieldEmail.setText(table.getValueAt(number, 5).toString());
+				botaoDeletar.setEnabled(true);
+				botaoAtualizar.setEnabled(true);
+				botaoCadastrar.setEnabled(false);
+				
+			}
 		});
 		//scrollPane.setColumnHeaderView(table);
 		scrollPane.setViewportView(table);
@@ -217,29 +241,6 @@ public class TelaCadastroCliente extends JFrame {
 		
 		TelaCadastroCliente.clearTable();
 		TelaCadastroCliente.loadTable();
-//---------------------------------------------------------------------
-		
-//		Connection conn = DB.getConnection();
-//		ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-//		ArrayList<Cliente> lista = new ArrayList<Cliente>();
-//		lista = clienteimp.findAll();
-//		for(Cliente cli : lista) {
-//		modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
-//		}
-		
-		
-		//--------------------------------------------
-		JLabel lblNewLabel_1 = new JLabel("S\u00F3 \u00E9 poss\u00EDvel alterar a senha.");
-		lblNewLabel_1.setBounds(10, 225, 261, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("ALTERAR SENHA: Informe o ID e SENHA e clique em Atualizar");
-		lblNewLabel_2.setBounds(10, 250, 353, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblParaDeletarInforme = new JLabel("DELETAR: informe apenas o ID e clique Deletar");
-		lblParaDeletarInforme.setBounds(10, 288, 304, 14);
-		contentPane.add(lblParaDeletarInforme);
 		
 		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o ID e clique em Buscar");
 		lblNewLabel_3.setBounds(10, 201, 304, 14);
@@ -249,6 +250,8 @@ public class TelaCadastroCliente extends JFrame {
 		btnBuscar.setBounds(387, 174, 114, 39);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				botaoDeletar.setEnabled(true);
+				botaoAtualizar.setEnabled(true);
 				int idConvertido = 0;
 
 				idConvertido = Integer.parseInt(textFieldID.getText());
@@ -323,6 +326,24 @@ public class TelaCadastroCliente extends JFrame {
 		textFieldEmail.setBounds(218, 30, 96, 20);
 		panel.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
+		
+		JButton botaoLimpar = new JButton("Limpar");
+		botaoLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textFieldID.setText(null);
+				textFieldNome.setText(null);
+				textFieldTelefone.setText(null);
+				textFieldLogin.setText(null);
+				textFieldSenha.setText(null);
+				textFieldEmail.setText(null);
+				botaoDeletar.setEnabled(false);
+				botaoAtualizar.setEnabled(false);
+				botaoCadastrar.setEnabled(true);
+				
+			}
+		});
+		botaoLimpar.setBounds(20, 117, 89, 23);
+		panel.add(botaoLimpar);
 		setSize(628, 576);
 		setLocationRelativeTo(null);
 	}

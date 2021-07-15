@@ -245,7 +245,8 @@ public class Program {
 //--		System.out.println(freteImp.findById(558));
 //-----------------------------------------------------------------------------
 ////findAll ok program
-//		System.out.println(freteImp.findAll());
+		System.out.println(freteImp.findAll());
+
 
 }
 	}

@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
 import db.DbException;
 import model.dao.FreteDao;
+import model.entities.Cliente;
 import model.entities.Frete;
+import model.entities.Funcionario;
+import model.entities.Status;
 
 public class FreteDaoImplementacao implements FreteDao {
 	
@@ -84,20 +88,201 @@ public class FreteDaoImplementacao implements FreteDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"DELETE FROM `transportadora_br_v2`.`frete`"
+					+"WHERE `Id_frete` = ?;");
+			
+			st.setInt(1, id);
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected DELETADO frete foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public Frete findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT f.*,\r\n" + 
+					"					        fu.Id_funcionario,			\r\n" + 
+					"					        fu.Nome as fuNome, \r\n" + 
+					"					        fu.Telefone as fuTelefone, \r\n" + 
+					"					        fu.Email as fuEmail, \r\n" + 
+					"					        fu.Login as fuLogin, \r\n" + 
+					"					        fu.Senha as fuSenha, \r\n" + 
+					"					        fu.Cargo_Id_cargo, \r\n" + 
+					"					        Id_cliente, \r\n" + 
+					"					        c.Nome as cliNome, \r\n" + 
+					"					        c.Telefone as cliTelefone, \r\n" + 
+					"					        c.Email as cliEmail, \r\n" + 
+					"					        c.Login as cliLogin, \r\n" + 
+					"					        c.Senha as cliSenha,\r\n" + 
+					"					        s.Id_status ,          \r\n" + 
+					"					        s.Descricao as staDescricao\r\n" + 
+					"					FROM transportadora_br_v2.frete f \r\n" + 
+					"					INNER JOIN transportadora_br_v2.funcionario fu ON \r\n" + 
+					"					f.Funcionario_Id_funcionario = fu.Id_funcionario \r\n" + 
+					"					INNER JOIN transportadora_br_v2.cliente c ON \r\n" + 
+					"					c.Id_cliente = f.Cliente_Id_cliente\r\n" + 
+					"					INNER JOIN transportadora_br_v2.status s ON\r\n" + 
+					"					s.Id_status = f.Status_Id_status\r\n" + 
+					"					WHERE f.Id_frete = ?");
+			st.setInt (1, id);
+			rs = st.executeQuery();
+			if(rs.next()) {
+				Frete obj = new Frete();
+				
+				obj.setIdFrete(rs.getInt("Id_frete"));
+				obj.setDescricao(rs.getString("Descricao"));
+				obj.setValor(rs.getDouble("Valor"));
+				obj.setNfe(rs.getString("Nfe"));
+				obj.setEndereco(rs.getString("Endereco"));
+				obj.setNumero(rs.getInt("Numero"));
+				
+				Funcionario fun = new Funcionario();
+				fun.setIdFuncionario(rs.getInt("Id_funcionario"));
+				fun.setNome(rs.getString("fuNome"));
+				fun.setTelefone(rs.getString("fuTelefone"));
+				fun.setEmail(rs.getString("fuEmail"));
+				fun.setLogin(rs.getString("fuLogin"));
+				fun.setSenha(rs.getString("fuSenha"));
+				
+				obj.setFuncionario(fun);	
+				
+				Cliente cli = new Cliente();
+				cli.setIdCliente(rs.getInt("Id_cliente"));
+				cli.setNome(rs.getString("cliNome"));
+				cli.setTelefone(rs.getString("cliTelefone"));
+				cli.setEmail(rs.getString("cliEmail"));
+				cli.setLogin(rs.getString("cliLogin"));
+				cli.setSenha(rs.getString("cliSenha"));
+				
+				obj.setCliente(cli);
+				
+				Status status = new Status();
+				status.setIdStatus(rs.getInt("Id_status"));
+				status.setDescricao(rs.getString("staDescricao"));
+				
+				obj.setStatus(status);
+				
+				return obj;
+				
+			}
+			System.out.println("Zebrou jão");
+			return null;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+//		return null;
 	}
 
 	@Override
-	public List<Frete> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Frete> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+		st = conn.prepareStatement(
+				"SELECT f.*,\r\n" + 
+				"					        fu.Id_funcionario,			\r\n" + 
+				"					        fu.Nome as fuNome, \r\n" + 
+				"					        fu.Telefone as fuTelefone, \r\n" + 
+				"					        fu.Email as fuEmail, \r\n" + 
+				"					        fu.Login as fuLogin, \r\n" + 
+				"					        fu.Senha as fuSenha, \r\n" + 
+				"					        fu.Cargo_Id_cargo, \r\n" + 
+				"					        Id_cliente, \r\n" + 
+				"					        c.Nome as cliNome, \r\n" + 
+				"					        c.Telefone as cliTelefone, \r\n" + 
+				"					        c.Email as cliEmail, \r\n" + 
+				"					        c.Login as cliLogin, \r\n" + 
+				"					        c.Senha as cliSenha,\r\n" + 
+				"					        s.Id_status ,          \r\n" + 
+				"					        s.Descricao as staDescricao\r\n" + 
+				"					FROM transportadora_br_v2.frete f \r\n" + 
+				"					INNER JOIN transportadora_br_v2.funcionario fu ON \r\n" + 
+				"					f.Funcionario_Id_funcionario = fu.Id_funcionario \r\n" + 
+				"					INNER JOIN transportadora_br_v2.cliente c ON \r\n" + 
+				"					c.Id_cliente = f.Cliente_Id_cliente\r\n" + 
+				"					INNER JOIN transportadora_br_v2.status s ON\r\n" + 
+				"					s.Id_status = f.Status_Id_status\r\n" + 
+				"					");
+		
+		rs = st.executeQuery();
+		
+		ArrayList<Frete> freteArray = new ArrayList<Frete>();
+		
+		while(rs.next()) {
+			Frete obj = new Frete();
+			
+			obj.setIdFrete(rs.getInt("Id_frete"));
+			obj.setDescricao(rs.getString("Descricao"));
+			obj.setValor(rs.getDouble("Valor"));
+			obj.setNfe(rs.getString("Nfe"));
+			obj.setEndereco(rs.getString("Endereco"));
+			obj.setNumero(rs.getInt("Numero"));
+			
+			Funcionario fun = new Funcionario();
+			fun.setIdFuncionario(rs.getInt("Id_funcionario"));
+			fun.setNome(rs.getString("fuNome"));
+			fun.setTelefone(rs.getString("fuTelefone"));
+			fun.setEmail(rs.getString("fuEmail"));
+			fun.setLogin(rs.getString("fuLogin"));
+			fun.setSenha(rs.getString("fuSenha"));
+			
+			obj.setFuncionario(fun);	
+			
+			Cliente cli = new Cliente();
+			cli.setIdCliente(rs.getInt("Id_cliente"));
+			cli.setNome(rs.getString("cliNome"));
+			cli.setTelefone(rs.getString("cliTelefone"));
+			cli.setEmail(rs.getString("cliEmail"));
+			cli.setLogin(rs.getString("cliLogin"));
+			cli.setSenha(rs.getString("cliSenha"));
+			
+			obj.setCliente(cli);
+			
+			Status status = new Status();
+			status.setIdStatus(rs.getInt("Id_status"));
+			status.setDescricao(rs.getString("staDescricao"));
+			
+			obj.setStatus(status);
+			
+			freteArray.add(obj);
+			
+		}
+		//System.out.println("Zebrou jão");
+		return freteArray;
+		
+	}
+	catch(SQLException e) {
+		throw new DbException(e.getMessage());
+	}
+	finally {
+		DB.closeStatement(st);
+		DB.closeResultSet(rs);
+	}
+//	return null;
+		
 	}
 
 }

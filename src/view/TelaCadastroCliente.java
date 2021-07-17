@@ -16,6 +16,7 @@ import model.entities.Funcionario;
 import model.entities.Usuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -33,6 +34,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class TelaCadastroCliente extends JFrame {
 
@@ -82,10 +84,12 @@ public class TelaCadastroCliente extends JFrame {
 		
 		// ----------------------------- EVENTO CADASTRAR ----------------------------------------------
 		JButton botaoCadastrar = new JButton("Cadastrar");
-		botaoCadastrar.setBounds(387, 26, 114, 39);
+		botaoCadastrar.setFont(new Font("Unispace", Font.PLAIN, 11));
+		botaoCadastrar.setBounds(387, 26, 127, 39);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TelaCadastroCliente.clearTable();
+				try {
 				int b = 0;
 
 				b = Integer.parseInt(textFieldID.getText());
@@ -93,19 +97,28 @@ public class TelaCadastroCliente extends JFrame {
 				Connection conn = DB.getConnection();
 				ClienteDaoImplementacao clienteImp = new ClienteDaoImplementacao(conn);
 				
-			Cliente cli = new Cliente(b, textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText());
+			
+				Cliente cli = new Cliente(b, textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText());
 				//textFieldNome.getText(), textFieldTelefone.getText(), textFieldEmail.getText(), textFieldLogin.getText(), textFieldSenha.getText()
 				
 			//	int b = 0;
 
 				b = Integer.parseInt(textFieldID.getText());
+			
 				
 				System.out.println();
 				
-			
-				
-				
 				clienteImp.insert(cli);
+				
+					
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso:\r\n");	
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos:\r\n"+erro);
+				}
+				finally {
+					
+				}
 				TelaCadastroCliente.clearTable();
 				TelaCadastroCliente.loadTable();
 				//Usuario userr = usuarioImp.findById(30);
@@ -116,28 +129,38 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(botaoCadastrar);
 		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
 		JButton botaoAtualizar = new JButton("Atualizar");
-		botaoAtualizar.setBounds(387, 76, 114, 39);
+		botaoAtualizar.setFont(new Font("Unispace", Font.PLAIN, 11));
+		botaoAtualizar.setBounds(387, 76, 127, 39);
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idConvertido = 0;
-
-				idConvertido = Integer.parseInt(textFieldID.getText());
-				
-				Connection conn = DB.getConnection();
-				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-				
-				Cliente cli = clienteimp.findById(idConvertido);
-				
-				cli.setIdCliente(idConvertido);
-				cli.setNome(textFieldNome.getText());
-				cli.setTelefone(textFieldTelefone.getText());
-				cli.setLogin(textFieldLogin.getText());
-				cli.setSenha(textFieldSenha.getText());
-				cli.setEmail(textFieldEmail.getText());
-				
-				clienteimp.update(cli);
-				TelaCadastroCliente.clearTable();
-				TelaCadastroCliente.loadTable();
+				try {
+					int idConvertido = 0;
+	
+					idConvertido = Integer.parseInt(textFieldID.getText());
+					
+					Connection conn = DB.getConnection();
+					ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+					
+					Cliente cli = clienteimp.findById(idConvertido);
+					
+					cli.setIdCliente(idConvertido);
+					cli.setNome(textFieldNome.getText());
+					cli.setTelefone(textFieldTelefone.getText());
+					cli.setLogin(textFieldLogin.getText());
+					cli.setSenha(textFieldSenha.getText());
+					cli.setEmail(textFieldEmail.getText());
+					
+					clienteimp.update(cli);
+					TelaCadastroCliente.clearTable();
+					TelaCadastroCliente.loadTable();
+					JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso:\r\n");
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Erro para atualizar:\r\n"+erro);
+				}
+				finally {
+					
+				}
 				
 			}
 		});
@@ -145,9 +168,11 @@ public class TelaCadastroCliente extends JFrame {
 		botaoAtualizar.setEnabled(false);
 		//--------------------------------- EVENTO DELETAR ----------------------------------------------
 		JButton botaoDeletar = new JButton("Deletar");
-		botaoDeletar.setBounds(385, 126, 114, 39);
+		botaoDeletar.setFont(new Font("Unispace", Font.PLAIN, 11));
+		botaoDeletar.setBounds(385, 126, 129, 39);
 		botaoDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				int idConvertido = 0;
 
 				idConvertido = Integer.parseInt(textFieldID.getText());
@@ -157,6 +182,15 @@ public class TelaCadastroCliente extends JFrame {
 				clienteimp.deleteById(idConvertido);
 				TelaCadastroCliente.clearTable();
 				TelaCadastroCliente.loadTable();
+					
+				JOptionPane.showMessageDialog(null, "Cliente deletado:\r\n");
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Erro para deletar:\r\n"+erro);
+				}
+				finally {
+					
+				}
 			}
 		});
 		contentPane.add(botaoDeletar);
@@ -164,11 +198,12 @@ public class TelaCadastroCliente extends JFrame {
 		
 		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
 		JButton botaoListar = new JButton("Listar Todos");
-		botaoListar.setBounds(387, 224, 114, 39);
+		botaoListar.setFont(new Font("Unispace", Font.PLAIN, 11));
+		botaoListar.setBounds(387, 224, 127, 39);
 		botaoListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				try {
 				
 				botaoDeletar.setEnabled(true);
 				botaoAtualizar.setEnabled(true);
@@ -197,7 +232,13 @@ public class TelaCadastroCliente extends JFrame {
 //				DB.closeConnection();
 				
 				//TelaCadastroCliente.loadTable();
-				
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Erro :\r\n"+erro);
+				}
+				finally {
+					
+				}
 				
 			}
 		});
@@ -242,14 +283,16 @@ public class TelaCadastroCliente extends JFrame {
 		TelaCadastroCliente.clearTable();
 		TelaCadastroCliente.loadTable();
 		
-		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o ID e clique em Buscar");
+		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o CPF e clique em Buscar");
 		lblNewLabel_3.setBounds(10, 201, 304, 14);
 		contentPane.add(lblNewLabel_3);
 		// --------------------------------------EVENTO BUSCAR ------------------------
 		JButton botaoBuscar = new JButton("Buscar");
-		botaoBuscar.setBounds(387, 174, 114, 39);
+		botaoBuscar.setFont(new Font("Unispace", Font.PLAIN, 11));
+		botaoBuscar.setBounds(387, 174, 127, 39);
 		botaoBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				botaoDeletar.setEnabled(true);
 				botaoAtualizar.setEnabled(true);
 				int idConvertido = 0;
@@ -263,7 +306,18 @@ public class TelaCadastroCliente extends JFrame {
 				
 				TelaCadastroCliente.clearTable();
 				TelaCadastroCliente.loadTable(cli);
-			}
+				JOptionPane.showMessageDialog(null, "Cliente localizado:\r\n");
+				
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "CPF não localizado:\r\n"+erro);
+				}
+				finally {
+					
+				}
+					
+					
+				}
 		});
 		contentPane.add(botaoBuscar);
 		// ----------------------------------- JPANEL
@@ -328,6 +382,7 @@ public class TelaCadastroCliente extends JFrame {
 		textFieldEmail.setColumns(10);
 		
 		JButton botaoLimpar = new JButton("Limpar");
+		botaoLimpar.setFont(new Font("Unispace", Font.PLAIN, 11));
 		botaoLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textFieldID.setText(null);

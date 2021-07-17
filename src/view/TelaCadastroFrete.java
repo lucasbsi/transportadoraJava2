@@ -277,6 +277,7 @@ public class TelaCadastroFrete extends JFrame {
 		btnLimpar.setFont(new Font("Unispace", Font.PLAIN, 11));
 		
 		JButton btnNewButton_3 = new JButton("Temp");
+		btnNewButton_3.setFont(new Font("Unispace", Font.PLAIN, 11));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -304,11 +305,11 @@ public class TelaCadastroFrete extends JFrame {
 		panel_1.add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if ((textFieldDescricao.getText() == "a") || (textFieldNfe.getText() == "" ) || (textFieldEndereco.getText() == "") || (textFieldId.getText() == "") || (textFieldValor.getText() == "") || (textFieldId.getText() == "") || (textFieldNumero.getText() == "")){
-					JOptionPane.showMessageDialog(null, "Favor preencher todos os campos");
-				
-				}
+				try {
+//				if ((textFieldDescricao.getText() == "a") || (textFieldNfe.getText() == "" ) || (textFieldEndereco.getText() == "") || (textFieldId.getText() == "") || (textFieldValor.getText() == "") || (textFieldId.getText() == "") || (textFieldNumero.getText() == "")){
+//					JOptionPane.showMessageDialog(null, "Favor preencher todos os campos");
+//				
+//				}
 				
 				int b = 0;
 				double c = 0;
@@ -354,6 +355,15 @@ public class TelaCadastroFrete extends JFrame {
 				
 				
 				freteImp.insert(frete);
+				
+					JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso:\r\n");	
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos:\r\n"+erro);
+				}
+				finally {
+				
+			}
 				
 				
 			}

@@ -27,6 +27,7 @@ import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.FreteDaoImplementacao;
 import model.entities.Cliente;
 import model.entities.Frete;
+import java.awt.Font;
 
 public class TelaTabelaFrete extends JFrame {
 
@@ -82,21 +83,31 @@ public class TelaTabelaFrete extends JFrame {
 
 		//--------------------------------- EVENTO DELETAR ----------------------------------------------
 		JButton botaoDeletar = new JButton("Deletar");
+		botaoDeletar.setFont(new Font("Unispace", Font.PLAIN, 11));
 		botaoDeletar.setBounds(34, 502, 114, 39);
 		botaoDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int number = table.getSelectedRow();
+				try {
+					int number = table.getSelectedRow();
+					
+					int codigoSelecionadoConvertido = Integer.parseInt(table.getValueAt(number, 0).toString());
+					
+					Connection conn = DB.getConnection();
+					FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
+					
+					System.out.println();
+					
+					freteImp.deleteById(codigoSelecionadoConvertido);
+					TelaTabelaFrete.clearTable();
+					TelaTabelaFrete.loadTable();
+					JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso:\r\n");	
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos:\r\n"+erro);
+				}
+				finally {
 				
-				int codigoSelecionadoConvertido = Integer.parseInt(table.getValueAt(number, 0).toString());
-				
-				Connection conn = DB.getConnection();
-				FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
-				
-				System.out.println();
-				
-				freteImp.deleteById(codigoSelecionadoConvertido);
-				TelaTabelaFrete.clearTable();
-				TelaTabelaFrete.loadTable();
+			}
 			}
 		});
 		contentPane.add(botaoDeletar);

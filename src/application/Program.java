@@ -3,6 +3,8 @@ package application;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.FreteDaoImplementacao;
@@ -245,8 +247,56 @@ public class Program {
 //--		System.out.println(freteImp.findById(558));
 //-----------------------------------------------------------------------------
 ////findAll ok program
+
 		System.out.println(freteImp.findAll());
 
-
+//-------------------------- load box TEST---------------------------------------
+		
+//		//JComboBox<Cliente> comboBox = new JComboBox<Cliente>();
+//				JComboBox<String> comboBox = new JComboBox<String>();
+//				comboBox.setBounds(46, 39, 239, 32);
+//				contentPane.add(comboBox);
+//				
+//				Connection conn = DB.getConnection();
+//				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
+//				//System.out.println(	clienteimp.findAll());
+//				
+//				ArrayList<Cliente> usuArray = new ArrayList<Cliente>();
+//				usuArray = clienteimp.findAll();
+//				ArrayList<Integer> idCli = new ArrayList<Integer>();
+//				
+//				for (Cliente cli : usuArray) {
+//					comboBox.addItem(cli.getNome());
+//					idCli.add(cli.getIdCliente());
+//					
+//				}
+//				
+//				System.out.println(comboBox.getSelectedIndex());
+//			
+//				
+//				//System.out.println(comboBox.getSelectedItem());
+//				
+//				
+//			
+//				
+//				
+////				---------------------------------------------------------------
+//				JComboBox<String> comboBoxFun = new JComboBox<String>();
+//				comboBoxFun.setBounds(312, 39, 239, 32);
+//				contentPane.add(comboBoxFun);
+//				
+//				Connection connFun = DB.getConnection();
+//				FuncionarioDaoImplementacao funcionarioimp = new FuncionarioDaoImplementacao(connFun);
+//				
+//				ArrayList<Funcionario> usuArrayFun = new ArrayList<Funcionario>();
+//				usuArrayFun = funcionarioimp.findAll();
+//				ArrayList<Integer> idFun = new ArrayList<Integer>();
+//				
+//				for (Funcionario fun : usuArrayFun) {
+//					comboBoxFun.addItem(fun.getNome());
+//					idFun.add(fun.getIdFuncionario());
+//					
+//				}
+//				System.out.println(idFun);
 }
 	}

@@ -88,29 +88,15 @@ public class MainWindow extends JFrame {
 		JMenuItem mnlGeraFrete = new JMenuItem("Gerar Frete");
 		mnlGeraFrete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+				//JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+				TelaCadastroFrete telaCadastroFrete = new TelaCadastroFrete();
+				telaCadastroFrete.setVisible(true);
 			}
 		});
 		mnFrete.add(mnlGeraFrete);
 		
-		JMenuItem mnlConsultaFrete = new JMenuItem("Consultar Frete");
-		mnlConsultaFrete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
-			}
-		});
-		mnFrete.add(mnlConsultaFrete);
-		
 		JMenu mnRelatorio = new JMenu("Relat\u00F3rios");
 		menuBar.add(mnRelatorio);
-		
-		JMenuItem mnIFretes = new JMenuItem("Fretes");
-		mnIFretes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
-			}
-		});
-		mnRelatorio.add(mnIFretes);
 		
 		JMenuItem mnIFuncionarios = new JMenuItem("Funcion\u00E1rios");
 		mnIFuncionarios.addActionListener(new ActionListener() {

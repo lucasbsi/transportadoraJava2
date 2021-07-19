@@ -9,8 +9,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,8 +27,11 @@ import javax.swing.table.DefaultTableModel;
 import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.FreteDaoImplementacao;
+import model.dao.impl.StatusDaoImplementacao;
 import model.entities.Cliente;
 import model.entities.Frete;
+import model.entities.Status;
+
 import java.awt.Font;
 
 public class TelaTabelaFrete extends JFrame {
@@ -77,6 +82,30 @@ public class TelaTabelaFrete extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+//		----------------------------------- COMBOBOX
+		JComboBox<String> comboBoxStatus = new JComboBox<String>();
+		comboBoxStatus.setBounds(357, 502, 122, 39);
+		contentPane.add(comboBoxStatus);
+		
+		Connection connStat = DB.getConnection();
+		StatusDaoImplementacao statusimp = new StatusDaoImplementacao(connStat);
+		
+		ArrayList<Status> statArray = new ArrayList<Status>();
+		statArray = statusimp.findAll();
+		ArrayList<Integer> idStat = new ArrayList<Integer>();
+		ArrayList<Integer> idCountStat = new ArrayList<Integer>();
+		int i=0;
+		
+		for (Status stat : statArray) {
+			comboBoxStatus.addItem(stat.getDescricao());
+			idStat.add(stat.getIdStatus());
+			idCountStat.add(i);
+			i++;
+			
+		}
+		
+		System.out.println(idStat);
+		
 		// ----------------------------- EVENTO CADASTRAR ----------------------------------------------
 
 //		// -------------------------------------EVENTO ATUALIZAR --------------------------------------------------------
@@ -113,10 +142,61 @@ public class TelaTabelaFrete extends JFrame {
 		contentPane.add(botaoDeletar);
 		botaoDeletar.setEnabled(true);
 		
+		//-------------------------------------EVENTO ALTERAR STATUS------------------------------		
+				JButton btnNewButton = new JButton("Alterar Status");
+				btnNewButton.setFont(new Font("Unispace", Font.PLAIN, 11));
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					try {
+						
+						int number = table.getSelectedRow();
+						
+						int codigoSelecionadoConvertido = Integer.parseInt(table.getValueAt(number, 0).toString());
+						System.out.println("Cod frete");
+						System.out.println(codigoSelecionadoConvertido);
+						
+						System.out.println("Status");
+						System.out.println(comboBoxStatus.getSelectedIndex());//pega o index
+						System.out.println(idStat.get(comboBoxStatus.getSelectedIndex()));// retorna o valor correspondente através no array idStat do index
+						
+						int codigoStatusSelecionado = idStat.get(comboBoxStatus.getSelectedIndex());
+						Connection conn = DB.getConnection();
+						FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
+						
+						System.out.println();
+						
+						freteImp.updateStatus(codigoSelecionadoConvertido, codigoStatusSelecionado);
+						TelaTabelaFrete.clearTable();
+						TelaTabelaFrete.loadTable();
+						JOptionPane.showMessageDialog(null, "Status alterado com sucesso:\r\n");	
+					}catch (Exception erro) {
+						//System.out.println("Preencha todos os campos:"+erro);
+						JOptionPane.showMessageDialog(null, "Erro:\r\n"+erro);
+					}
+					finally {
+					
+				}
+						
+						//idStat.get(comboBoxStatus.getSelectedIndex())
+					}
+				});
+				btnNewButton.setBounds(496, 502, 153, 39);
+				contentPane.add(btnNewButton);
+				setSize(767, 602);
+				setLocationRelativeTo(null);
+				
+				
+			
+		
 //		//---------------------------------EVENTO LISTAR TODOS -------------------------------------------------
 
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		scrollPane.setBounds(10, 10, 709, 468);
 		contentPane.add(scrollPane);
 		
@@ -125,16 +205,45 @@ public class TelaTabelaFrete extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				int number = table.getSelectedRow();
-//				
-//				
-//				int codigoSelecionadoConvertido = Integer.parseInt(table.getValueAt(number, 0).toString());
+				try {
+					int number = table.getSelectedRow();
+					
+					System.out.println(table.getValueAt(number, 8).toString());// retorna string da tabela
+					String CurrentStatus = table.getValueAt(number, 8).toString();
+					System.out.println(number);
+					System.out.println(CurrentStatus);
+					System.out.println((String) CurrentStatus);
+					//System.out.println(idStat);// retorna array de status do bd
+					//System.out.println(comboBoxStatus);
+					//System.out.println(comboBoxStatus.getSelectedItem());//retorna o item do combobox
+					//System.out.println(idCountStat.get(1));// retorna o conteudo na posição i do array
+					
+					// sincronizar table com combobox
+					if (CurrentStatus.equals("Novo")) {
+						comboBoxStatus.setSelectedIndex(0);
+						
+					}else if (CurrentStatus.equals("Em rota")) {
+						comboBoxStatus.setSelectedIndex(1);
+						
+					}else if (CurrentStatus.equals("Entregue")) {
+						comboBoxStatus.setSelectedIndex(2);
+						
+					}else if (CurrentStatus.equals("Cancelado")) {
+						comboBoxStatus.setSelectedIndex(3);
+					}
+					
+					
+					
+					JOptionPane.showMessageDialog(null, "Ok:\r\n");
+					
+				}catch (Exception erro) {
+					//System.out.println("Preencha todos os campos:"+erro);
+					JOptionPane.showMessageDialog(null, "Erro:\r\n"+erro);
+				}
+				finally {
 				
-				
-//				botaoDeletar.setEnabled(true);
-//				botaoAtualizar.setEnabled(true);
-//				botaoCadastrar.setEnabled(false);
-//				
+				}
+				//textFieldID.setText(table.getValueAt(number, 0).toString());
 			}
 		});
 		//scrollPane.setColumnHeaderView(table);
@@ -153,10 +262,6 @@ public class TelaTabelaFrete extends JFrame {
 		
 		TelaTabelaFrete.clearTable();
 		TelaTabelaFrete.loadTable();
-		
-		JLabel lblNewLabel_3 = new JLabel("BUSCAR: Informe o ID e clique em Buscar");
-		lblNewLabel_3.setBounds(499, 204, 203, 14);
-		contentPane.add(lblNewLabel_3);
 		// --------------------------------------EVENTO BUSCAR ------------------------
 //		JButton botaoBuscar = new JButton("Buscar");
 //		botaoBuscar.setBounds(387, 174, 114, 39);
@@ -226,10 +331,13 @@ public class TelaTabelaFrete extends JFrame {
 //				
 			}
 		});
+		
+		
+		
 		botaoLimpar.setBounds(20, 117, 89, 23);
 		panel.add(botaoLimpar);
-		setSize(767, 602);
-		setLocationRelativeTo(null);
+
+		
 	}
 	
 	public static void loadTable() {
@@ -238,6 +346,7 @@ public class TelaTabelaFrete extends JFrame {
 		for(Frete frete : freteimp.findAll()) {
 			//modelo.addRow(new Object[] {cli.getIdCliente(), cli.getNome(), cli.getTelefone(), cli.getEmail(), cli.getLogin(), cli.getSenha()});
 			modelo.addRow(new Object[] {frete.getIdFrete(), frete.getDescricao(), frete.getValor(), frete.getNfe(), frete.getEndereco(), frete.getNumero(), frete.getCliente().getNome(), frete.getFuncionario().getNome(), frete.getStatus().getDescricao()});
+//			, frete.getStatus().getIdStatus()
 			//Frete frete = new Frete(9902, "Notebook",(double)4500, "ATK001", "Rua cambuci pg guarus", 9, cli, fun, status);
 			}
 
@@ -255,8 +364,4 @@ public class TelaTabelaFrete extends JFrame {
 			}
 		
 	}
-	
-
-	
-
 }

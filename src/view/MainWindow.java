@@ -81,7 +81,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		menuCadastro.add(mnlFuncionario);
-		
+		//------------------------- CHAMADA DA Tela FRETE -------------------------------
 		JMenu mnFrete = new JMenu("Frete");
 		menuBar.add(mnFrete);
 		
@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnFrete.add(mnlGeraFrete);
-		
+		//------------------------- CHAMADA DA Tela RELATORIOS -------------------------------
 		JMenu mnRelatorio = new JMenu("Relat\u00F3rios");
 		menuBar.add(mnRelatorio);
 		

@@ -85,6 +85,37 @@ public class FreteDaoImplementacao implements FreteDao {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void updateStatus(int codigoFrete, int codigoStatus) {
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"UPDATE `transportadora_br_v2`.`frete`\r\n" + 
+					"SET\r\n" + 
+					"`Status_Id_status` = ?\r\n" + 
+					 
+					"WHERE `Id_frete` = ?");
+			
+		
+			st.setInt(1, codigoStatus);
+			st.setInt(2, codigoFrete);
+			
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+		
+	}
 
 	@Override
 	public void deleteById(Integer id) {

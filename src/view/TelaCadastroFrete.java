@@ -179,31 +179,31 @@ public class TelaCadastroFrete extends JFrame {
 		
 //-----------------------------------------------------------------------------
 		
-		JButton btnNewButton = new JButton("Load Cliente");
-		btnNewButton.setBounds(80, 105, 171, 23);
-		btnNewButton.setFont(new Font("Unispace", Font.PLAIN, 11));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Cliente");
-				System.out.println(comboBox.getSelectedIndex());
-				System.out.println(idCli.get(comboBox.getSelectedIndex()));
-			}
-		});
-		contentPane.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Load Funcionario");
-		btnNewButton_1.setBounds(339, 105, 171, 23);
-		btnNewButton_1.setFont(new Font("Unispace", Font.PLAIN, 11));
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Funcionario");
-				System.out.println(comboBoxFun.getSelectedIndex());
-				System.out.println(idFun.get(comboBoxFun.getSelectedIndex()));
-			}
-		});
-		contentPane.add(btnNewButton_1);
+//		JButton btnNewButton = new JButton("Load Cliente");
+//		btnNewButton.setBounds(80, 105, 171, 23);
+//		btnNewButton.setFont(new Font("Unispace", Font.PLAIN, 11));
+//		btnNewButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				System.out.println("Cliente");
+//				System.out.println(comboBox.getSelectedIndex());
+//				System.out.println(idCli.get(comboBox.getSelectedIndex()));
+//			}
+//		});
+//		contentPane.add(btnNewButton);
+//		
+//		JButton btnNewButton_1 = new JButton("Load Funcionario");
+//		btnNewButton_1.setBounds(339, 105, 171, 23);
+//		btnNewButton_1.setFont(new Font("Unispace", Font.PLAIN, 11));
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				System.out.println("Funcionario");
+//				System.out.println(comboBoxFun.getSelectedIndex());
+//				System.out.println(idFun.get(comboBoxFun.getSelectedIndex()));
+//			}
+//		});
+//		contentPane.add(btnNewButton_1);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(25, 162, 561, 226);
@@ -276,19 +276,19 @@ public class TelaCadastroFrete extends JFrame {
 		panel.add(btnLimpar);
 		btnLimpar.setFont(new Font("Unispace", Font.PLAIN, 11));
 		
-		JButton btnNewButton_3 = new JButton("Temp");
-		btnNewButton_3.setFont(new Font("Unispace", Font.PLAIN, 11));
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Status");
-				System.out.println(comboBoxStatus.getSelectedIndex());
-				System.out.println(idStat.get(comboBoxStatus.getSelectedIndex()));
-				
-			}
-		});
-		btnNewButton_3.setBounds(393, 177, 89, 23);
-		panel.add(btnNewButton_3);
+//		JButton btnNewButton_3 = new JButton("Temp");
+//		btnNewButton_3.setFont(new Font("Unispace", Font.PLAIN, 11));
+//		btnNewButton_3.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				System.out.println("Status");
+//				System.out.println(comboBoxStatus.getSelectedIndex());
+//				System.out.println(idStat.get(comboBoxStatus.getSelectedIndex()));
+//				
+//			}
+//		});
+//		btnNewButton_3.setBounds(393, 177, 89, 23);
+//		panel.add(btnNewButton_3);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(25, 391, 561, 43);

@@ -234,7 +234,7 @@ public class TelaTabelaFrete extends JFrame {
 					
 					
 					
-					JOptionPane.showMessageDialog(null, "Ok:\r\n");
+					//JOptionPane.showMessageDialog(null, "Ok:\r\n");
 					
 				}catch (Exception erro) {
 					//System.out.println("Preencha todos os campos:"+erro);

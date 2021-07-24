@@ -104,7 +104,7 @@ public class TelaTabelaFrete extends JFrame {
 			
 		}
 		
-		System.out.println(idStat);
+		//System.out.println(idStat);
 		
 		// ----------------------------- EVENTO CADASTRAR ----------------------------------------------
 
@@ -129,7 +129,7 @@ public class TelaTabelaFrete extends JFrame {
 					freteImp.deleteById(codigoSelecionadoConvertido);
 					TelaTabelaFrete.clearTable();
 					TelaTabelaFrete.loadTable();
-					JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso:\r\n");	
+					JOptionPane.showMessageDialog(null, "Frete removido:\r\n");	
 				}catch (Exception erro) {
 					//System.out.println("Preencha todos os campos:"+erro);
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos:\r\n"+erro);

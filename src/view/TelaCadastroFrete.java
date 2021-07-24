@@ -125,7 +125,7 @@ public class TelaCadastroFrete extends JFrame {
 			
 		}
 		
-		System.out.println(comboBox.getSelectedIndex());
+		//System.out.println(comboBox.getSelectedIndex());
 	
 		
 		//System.out.println(comboBox.getSelectedItem());
@@ -174,7 +174,7 @@ public class TelaCadastroFrete extends JFrame {
 			
 		}
 		
-		System.out.println(idStat);
+		//System.out.println(idStat);
 		
 		
 //-----------------------------------------------------------------------------

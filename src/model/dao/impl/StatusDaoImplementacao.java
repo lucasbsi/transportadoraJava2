@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,41 @@ public class StatusDaoImplementacao implements StatusDao {
 	}
 	@Override
 	public void insert(Status obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					"INSERT INTO `transportadora_br_v2`.`status`"
+					+"(`Id_status`,`Descricao`)"
+					+"VALUES"
+					+"(?, ?)"
+					, Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, obj.getIdStatus());
+			st.setString(2, obj.getDescricao());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					System.out.println(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Erro: Nenhuma linha adicionada");
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("Erro ao tentar inserir o Status no DB");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -36,7 +71,28 @@ public class StatusDaoImplementacao implements StatusDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"DELETE FROM `transportadora_br_v2`.`status`"
+					+"WHERE `Id_status` = ?;");
+			
+			st.setInt(1, id);
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("A quantidade de Status removidos:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Erro para deletar Status do BD.");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+		
 		
 	}
 

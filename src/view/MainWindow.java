@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,11 +19,17 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.tools.javac.Main;
+
 import db.DB;
 import model.dao.impl.UsuarioDaoImplementacao;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
 
 public class MainWindow extends JFrame {
 	/**
@@ -113,6 +120,26 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnRelatorio.add(mnlClientes);
+		
+		JMenu mnNewMenu = new JMenu("Mais");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Criar Status");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					TelaCadastroStatus telaCadastroStatus = new TelaCadastroStatus();
+					telaCadastroStatus.setVisible(true);
+				
+			}
+		});
+		mnNewMenu.add(mntmNewMenuItem);
+		
+		JSeparator separator = new JSeparator();
+		mnNewMenu.add(separator);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Sobre");
+		mnNewMenu.add(mntmNewMenuItem_1);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -123,12 +150,56 @@ public class MainWindow extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		JLabel labelTestando = new JLabel("");
+		labelTestando.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaCadastroStatus telaCadastroStatus = new TelaCadastroStatus();
+				telaCadastroStatus.setVisible(true);
+				
+				
+			}
+		});
+		labelTestando.setBounds(834, 0, 52, 45);
+		panel.add(labelTestando);
+		//lblFoto.setIcon(new ImageIcon(image.getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT)));
+		
+		
+		
+		ImageIcon image = new ImageIcon(TelaCadastroStatus.class.getResource("/img/settings.png"));
+		labelTestando.setIcon(new ImageIcon(image.getImage().getScaledInstance(30,30,30)));
+		
+
+		
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/truck4.jpg")));
 		lblNewLabel.setBounds(0, 0, 886, 539);
+		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/fastE.png")));
 		panel.add(lblNewLabel);
+//---------------------------------------
+		 
+		
+//		------------------------------------------------
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

@@ -255,7 +255,7 @@ public class FreteDaoImplementacao implements FreteDao {
 				"					INNER JOIN transportadora_br_v2.cliente c ON \r\n" + 
 				"					c.Id_cliente = f.Cliente_Id_cliente\r\n" + 
 				"					INNER JOIN transportadora_br_v2.status s ON\r\n" + 
-				"					s.Id_status = f.Status_Id_status\r\n" + 
+				"					s.Id_status = f.Status_Id_status\r\n ORDER BY f.Id_frete DESC" + 
 				"					");
 		
 		rs = st.executeQuery();

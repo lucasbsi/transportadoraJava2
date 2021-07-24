@@ -9,6 +9,7 @@ import db.DB;
 import model.dao.impl.ClienteDaoImplementacao;
 import model.dao.impl.FreteDaoImplementacao;
 import model.dao.impl.FuncionarioDaoImplementacao;
+import model.dao.impl.StatusDaoImplementacao;
 import model.dao.impl.UsuarioDaoImplementacao;
 import model.entities.Cargo;
 import model.entities.Cliente;
@@ -206,9 +207,9 @@ public class Program {
 	//	funcionarioImp.update(fun);
 		
 //----------------------------------------FRETE TESTES -------------------------------------------------------------------------
-		Connection conn = DB.getConnection();
-		FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
-		System.out.println(freteImp);
+//		Connection conn = DB.getConnection();
+//		FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
+//		System.out.println(freteImp);
 		
 //		ClienteDaoImplementacao clienteImp = new ClienteDaoImplementacao(conn);
 //		
@@ -248,7 +249,7 @@ public class Program {
 //-----------------------------------------------------------------------------
 ////findAll ok program
 
-		System.out.println(freteImp.findAll());
+//		System.out.println(freteImp.findAll());
 
 //-------------------------- load box TEST---------------------------------------
 		
@@ -298,5 +299,22 @@ public class Program {
 //					
 //				}
 //				System.out.println(idFun);
+//------------------------------STATUS TESTES-------------------------
+		
+		Connection conn = DB.getConnection();
+		StatusDaoImplementacao statusImp = new StatusDaoImplementacao(conn);
+		System.out.println(statusImp);
+//		
+//		//Status stat = new Status(34, "Sumiu");
+		
+//		//-- insert OK
+//		statusImp.insert(stat);
+//		//-- findid ok
+//		System.out.println(statusImp.findById(34));
+//      //--find all ok---------------------------------------------------
+//		System.out.println(statusImp.findAll());
+		//--delete
+		statusImp.deleteById(34);
+		
 }
 	}

@@ -21,12 +21,12 @@ public class DB {
 				conn = DriverManager.getConnection(url, login, senha);
 			}
 			catch (SQLException e) {
-				System.out.println("Erro kkk");
+				System.out.println("Erro para conectar ao DB!!");
 				throw new DbException(e.getMessage());
 				
 			}
 		}
-		System.out.println("Uau conectado!");
+		System.out.println("Conexão realizada ao DB!");
 		return conn;
 	}
 	

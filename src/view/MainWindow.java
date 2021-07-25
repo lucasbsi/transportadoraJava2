@@ -105,21 +105,27 @@ public class MainWindow extends JFrame {
 		JMenu mnRelatorio = new JMenu("Relat\u00F3rios");
 		menuBar.add(mnRelatorio);
 		
-		JMenuItem mnIFuncionarios = new JMenuItem("Funcion\u00E1rios");
-		mnIFuncionarios.addActionListener(new ActionListener() {
+		JMenuItem mnIGeral = new JMenuItem("Geral");
+		mnIGeral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+				//JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
+				
+				TelaRelatorioGeral telaRelatorioGeral = new TelaRelatorioGeral();
+				telaRelatorioGeral.setVisible(true);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		});
-		mnRelatorio.add(mnIFuncionarios);
-		
-		JMenuItem mnlClientes = new JMenuItem("Clientes");
-		mnlClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Coming Soon !!!!!");
-			}
-		});
-		mnRelatorio.add(mnlClientes);
+		mnRelatorio.add(mnIGeral);
 		
 		JMenu mnNewMenu = new JMenu("Mais");
 		menuBar.add(mnNewMenu);
@@ -139,6 +145,11 @@ public class MainWindow extends JFrame {
 		mnNewMenu.add(separator);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Sobre");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Desenvolvido por: @lucasjkw - https://github.com/lucasbsi ");
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

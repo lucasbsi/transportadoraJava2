@@ -65,7 +65,34 @@ public class StatusDaoImplementacao implements StatusDao {
 
 	@Override
 	public void update(Status obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+		
+			st = conn.prepareStatement(
+					
+					"UPDATE `transportadora_br_v2`.`status`\r\n" + 
+					"SET\r\n" + 
+					"`Id_status` = ?,\r\n" + 
+					"`Descricao` = ?\r\n" + 
+					"WHERE `Id_status` = ?");
+			
+		
+			st.setInt(1, obj.getIdStatus());
+			st.setString(2, obj.getDescricao());
+			st.setInt(3, obj.getIdStatus());
+			
+			
+			int rowsAffected = st.executeUpdate();
+			System.out.println("O rowsAffected foi de:"+ rowsAffected);
+		
+		}
+		catch(SQLException e) {
+			System.out.println("Deu erro pra inserir aqui tbm mano kkkk");
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

@@ -301,11 +301,12 @@ public class Program {
 //				System.out.println(idFun);
 //------------------------------STATUS TESTES-------------------------
 		
-		Connection conn = DB.getConnection();
-		StatusDaoImplementacao statusImp = new StatusDaoImplementacao(conn);
-		System.out.println(statusImp);
-//		
-//		//Status stat = new Status(34, "Sumiu");
+//		Connection conn = DB.getConnection();
+//		StatusDaoImplementacao statusImp = new StatusDaoImplementacao(conn);
+//		System.out.println(statusImp);
+////		
+//		Status stat = new Status(34, "Meteram o pé");
+//		statusImp.update(stat);
 		
 //		//-- insert OK
 //		statusImp.insert(stat);
@@ -313,8 +314,15 @@ public class Program {
 //		System.out.println(statusImp.findById(34));
 //      //--find all ok---------------------------------------------------
 //		System.out.println(statusImp.findAll());
-		//--delete
-		statusImp.deleteById(34);
-		
+		//--delete ok
+//		statusImp.deleteById(34);
+//		// -- update
+//		statusImp.update(stat);
+// -----------------------------------RELATÓRIOS TESTES --------------------------
+		Connection conn = DB.getConnection();
+		FreteDaoImplementacao freteImp = new FreteDaoImplementacao(conn);
+		System.out.println(freteImp);
+//		
+		System.out.println(freteImp.findFreteByClienteId(777));
 }
 	}

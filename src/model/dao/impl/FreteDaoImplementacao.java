@@ -315,5 +315,95 @@ public class FreteDaoImplementacao implements FreteDao {
 //	return null;
 		
 	}
+	
+	
+	public ArrayList<Frete> findFreteByClienteId(Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT f.*,\r\n" + 
+							"					        fu.Id_funcionario,			\r\n" + 
+							"					        fu.Nome as fuNome, \r\n" + 
+							"					        fu.Telefone as fuTelefone, \r\n" + 
+							"					        fu.Email as fuEmail, \r\n" + 
+							"					        fu.Login as fuLogin, \r\n" + 
+							"					        fu.Senha as fuSenha, \r\n" + 
+							"					        fu.Cargo_Id_cargo, \r\n" + 
+							"					        Id_cliente, \r\n" + 
+							"					        c.Nome as cliNome, \r\n" + 
+							"					        c.Telefone as cliTelefone, \r\n" + 
+							"					        c.Email as cliEmail, \r\n" + 
+							"					        c.Login as cliLogin, \r\n" + 
+							"					        c.Senha as cliSenha,\r\n" + 
+							"					        s.Id_status ,          \r\n" + 
+							"					        s.Descricao as staDescricao\r\n" +
+					"FROM transportadora_br_v2.frete f \r\n" + 
+					"INNER JOIN transportadora_br_v2.funcionario fu ON \r\n" + 
+					"f.Funcionario_Id_funcionario = fu.Id_funcionario \r\n" + 
+					"INNER JOIN transportadora_br_v2.cliente c ON \r\n" + 
+					"c.Id_cliente = f.Cliente_Id_cliente\r\n" + 
+					"INNER JOIN transportadora_br_v2.status s ON\r\n" + 
+					"s.Id_status = f.Status_Id_status\r\n" + 
+					"WHERE c.Id_cliente = ?" + 
+					"					;");
+			st.setInt (1, id);
+			rs = st.executeQuery();
+			
+			ArrayList<Frete> freteArray = new ArrayList<Frete>();
+			
+			while(rs.next()) {
+				Frete obj = new Frete();
+				
+				obj.setIdFrete(rs.getInt("Id_frete"));
+				obj.setDescricao(rs.getString("Descricao"));
+				obj.setValor(rs.getDouble("Valor"));
+				obj.setNfe(rs.getString("Nfe"));
+				obj.setEndereco(rs.getString("Endereco"));
+				obj.setNumero(rs.getInt("Numero"));
+				
+				Funcionario fun = new Funcionario();
+				fun.setIdFuncionario(rs.getInt("Id_funcionario"));
+				fun.setNome(rs.getString("fuNome"));
+				fun.setTelefone(rs.getString("fuTelefone"));
+				fun.setEmail(rs.getString("fuEmail"));
+				fun.setLogin(rs.getString("fuLogin"));
+				fun.setSenha(rs.getString("fuSenha"));
+				
+				obj.setFuncionario(fun);	
+				
+				Cliente cli = new Cliente();
+				cli.setIdCliente(rs.getInt("Id_cliente"));
+				cli.setNome(rs.getString("cliNome"));
+				cli.setTelefone(rs.getString("cliTelefone"));
+				cli.setEmail(rs.getString("cliEmail"));
+				cli.setLogin(rs.getString("cliLogin"));
+				cli.setSenha(rs.getString("cliSenha"));
+				
+				obj.setCliente(cli);
+				
+				Status status = new Status();
+				status.setIdStatus(rs.getInt("Id_status"));
+				status.setDescricao(rs.getString("staDescricao"));
+				
+				obj.setStatus(status);
+				
+				freteArray.add(obj);
+				
+			}
+			//System.out.println("Zebrou jão");
+			return freteArray;
+			
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+//	return null;
+		
+	}
 
 }

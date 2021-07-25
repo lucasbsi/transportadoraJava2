@@ -262,27 +262,7 @@ public class TelaTabelaFrete extends JFrame {
 		
 		TelaTabelaFrete.clearTable();
 		TelaTabelaFrete.loadTable();
-		// --------------------------------------EVENTO BUSCAR ------------------------
-//		JButton botaoBuscar = new JButton("Buscar");
-//		botaoBuscar.setBounds(387, 174, 114, 39);
-//		botaoBuscar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				botaoDeletar.setEnabled(true);
-//				botaoAtualizar.setEnabled(true);
-//				int idConvertido = 0;
-//
-//				idConvertido = Integer.parseInt(textFieldID.getText());
-//				Connection conn = DB.getConnection();
-//				ClienteDaoImplementacao clienteimp = new ClienteDaoImplementacao(conn);
-//				
-//				Cliente cli = clienteimp.findById(idConvertido);
-//				System.out.println(cli);
-//				
-//				TelaCadastroCliente.clearTable();
-//				TelaCadastroCliente.loadTable(cli);
-//			}
-//		});
-//		contentPane.add(botaoBuscar);
+
 		// ----------------------------------- JPANEL
 		JPanel panel = new JPanel();
 		panel.setBounds(707, 210, 1, 1);
@@ -325,10 +305,7 @@ public class TelaTabelaFrete extends JFrame {
 				textFieldLogin.setText(null);
 				textFieldSenha.setText(null);
 				textFieldEmail.setText(null);
-//				botaoDeletar.setEnabled(false);
-//				botaoAtualizar.setEnabled(false);
-//				botaoCadastrar.setEnabled(true);
-//				
+
 			}
 		});
 		
